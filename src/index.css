@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Playfair Display', serif;
+  }
+  body {
+    @apply bg-space-blue text-white min-h-screen overflow-hidden;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply text-white/80 hover:text-white transition-colors duration-200 font-light;
+  }
+
+  .btn-primary {
+    @apply px-6 py-2 bg-deep-purple hover:bg-deep-purple/80 text-white rounded-lg
+    transition-all duration-300 transform hover:scale-105 hover:shadow-lg
+    hover:shadow-star-gold/20;
+  }
+
+  .star {
+    @apply w-1 h-1 bg-white rounded-full absolute animate-twinkle;
+  }
+}
+
+.logo-text {
+  letter-spacing: 0.05em;
+}
+
+.typing-animation {
+  display: inline-block;
+  overflow: hidden;
+  border-right: 2px solid;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end),
+    blink-caret 0.75s step-end infinite;
+  margin: 0 auto;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: white }
+}
+
+.constellation {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.constellation line {
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 1;
+}
