@@ -1,53 +1,40 @@
-# Askstar 🌟
+# Askstar - Your Personal Astrology Guide ⭐
 
-Askstar is an elegant astrological web application that provides personalized birth chart interpretations and cosmic insights. Built with modern web technologies, it offers a seamless and engaging user experience.
+## Overview
+Askstar is a web application that provides personalized astrological insights through an elegant and intuitive interface. Our goal is to make astrology accessible and meaningful for everyone.
 
-## Features
+## Current Features
+- Beautiful, responsive landing page
+- Modern, space-themed design
+- Smooth animations and transitions
+- Mobile-friendly interface
 
-- **Elegant Interface**: Clean, minimalist design with a focus on user experience
-- **Responsive Design**: Fully responsive layout that works beautifully on all devices
-- **Interactive Elements**: Smooth animations and transitions for an engaging experience
-- **Birth Chart Analysis**: Coming soon - Personalized astrological interpretations
+## Coming Soon
+- Birth chart analysis
+- Personalized interpretations
+- Interactive astrology learning
 
-## Technology Stack
+## Development
 
-- **Frontend**: React with TypeScript
-- **Styling**: Tailwind CSS for modern, responsive design
-- **Animation**: Framer Motion for smooth transitions
-- **Build Tool**: Vite for fast development and optimized production builds
+### Tech Stack
+- React + TypeScript
+- Tailwind CSS
+- Framer Motion
+- Vite
 
-## Getting Started
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/stariver1119/Askstar.git
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-4. Open http://localhost:3000 in your browser
-
-## Project Structure
-
-```
-src/
-├── components/     # React components
-├── assets/         # Static assets
-└── styles/         # Global styles and Tailwind configuration
+### Running Locally
+```bash
+npm install
+npm run dev
 ```
 
-## Contributing
+Open `http://localhost:3000` to view the application.
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+### Project Status
+- ✅ Landing page design
+- ✅ Mobile responsiveness
+- 🚧 Birth chart analysis (In Progress)
+- 📅 Personalized readings (Planned)
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Contact
+For questions or suggestions, please open an issue or submit a pull request.
