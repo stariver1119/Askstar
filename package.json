@@ -4,12 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "convert-data": "node scripts/convertAllLanguages.js",
+    "convert-ko": "node scripts/convertSheetToJson_ko.js",
+    "convert-en": "node scripts/convertSheetToJson_en.js",
+    "dev": "npm run convert-data && vite",
+    "build": "npm run convert-data && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "dotenv": "^16.5.0",
+    "google-spreadsheet": "^3.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
