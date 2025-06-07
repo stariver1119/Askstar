@@ -9,7 +9,7 @@
 
 ---
 
-## [2024-12-20] - Multilingual Static Data Generation System
+## [2025-05-24] - Multilingual Static Data Generation System
 
 ### ✨ Added
 - 🌍 **Multilingual Data System**
