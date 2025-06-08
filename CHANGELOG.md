@@ -9,6 +9,7 @@
 
 ---
 
+
 [2025-06-08] -Added input page with user form and implemented internationalization (i18n) system
 
 ### Added
