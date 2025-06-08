@@ -1,0 +1,22 @@
+{
+  "ko": {
+    "main": {
+      "title": "별이 들려주는 당신의 이야기",
+      "askButton": "별에게 물어보세요",
+      "navHome": "홈",
+      "navAbout": "서비스 소개",
+      "navGetStarted": "시작하기",
+      "footer": "© 2025 askstar. 모든 권리 보유."
+    }
+  },
+  "en": {
+    "main": {
+      "title": "Your story from the stars",
+      "askButton": "Ask the Stars",
+      "navHome": "Home",
+      "navAbout": "About Service",
+      "navGetStarted": "Get Started",
+      "footer": "© 2025 askstar. All rights reserved."
+    }
+  }
+}

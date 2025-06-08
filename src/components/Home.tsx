@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from '../hooks/useTranslation';
 
 const Home = () => {
   const constellationRef = useRef<SVGSVGElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const createConstellation = () => {
@@ -73,9 +75,9 @@ const Home = () => {
           </motion.div>
         </div>
         <div className="flex gap-6">
-          <a href="#" className="nav-link">Home</a>
-          <a href="#" className="nav-link">About Service</a>
-          <a href="#" className="nav-link">Get Started</a>
+          <a href="#" className="nav-link">{t('main.navHome')}</a>
+          <a href="#" className="nav-link">{t('main.navAbout')}</a>
+          <a href="#" className="nav-link">{t('main.navGetStarted')}</a>
         </div>
       </nav>
 
@@ -87,7 +89,7 @@ const Home = () => {
           transition={{ duration: 0.8 }}
           className="text-4xl font-light mb-6 text-center tracking-wider max-w-3xl leading-relaxed text-white/90"
         >
-          Your story from the stars
+          {t('main.title')}
         </motion.h1>
 
         <motion.button
@@ -97,13 +99,13 @@ const Home = () => {
           whileHover={{ scale: 1.05 }}
           className="px-8 py-3 bg-star-gold/20 hover:bg-star-gold/30 rounded-full transition-colors duration-300 text-white/90 border border-star-gold/30 hover:border-star-gold/50 text-lg mb-4"
         >
-          Ask the Stars
+          {t('main.askButton')}
         </motion.button>
       </main>
 
       {/* Footer */}
       <footer className="relative z-10 text-center py-1 text-white/25 font-extralight text-xs tracking-widest">
-        <p>© 2025 askstar. All rights reserved.</p>
+        <p>{t('main.footer')}</p>
       </footer>
     </div>
   );
