@@ -9,7 +9,20 @@
 
 ---
 
-[2025-06-08] - SVG Icon Components Implementation
+[2025-06-08] -Added input page with user form and implemented internationalization (i18n) system
+
+### Added
+- Implemented internationalization (i18n) system with support for Korean and English languages
+- Added a dedicated translation data file for better maintainability
+- Created Input Page with user information form (name, gender, zodiac signs)
+- Implemented Custom Select component with animation effects
+- Added StarryBackground shared component for consistent UI between pages
+- Connected Home page to Input page with proper navigation
+- Implemented form validation for required fields
+
+---
+
+[2025-06-07] - SVG Icon Components Implementation
 ✨ Added
 
 12 Zodiac Sign Icon Components: Complete React TypeScript implementation

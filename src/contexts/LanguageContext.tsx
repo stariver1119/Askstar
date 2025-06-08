@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { detectBrowserLanguage } from '../utils/detectLanguage';
 import mainPageTranslations from '../data/mainPageTranslations.json';
+import inputPageTranslations from '../data/inputPageTranslations.json';
 
 // Define the language type
 export type Language = 'ko' | 'en';
@@ -24,7 +25,25 @@ interface LanguageProviderProps {
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const [currentLanguage, setCurrentLanguage] = useState<Language>('en');
-  const [translations] = useState<Record<string, any>>(mainPageTranslations);
+  
+  // Properly merge the translations by language
+  const [translations] = useState<Record<string, any>>(() => {
+    // Create a deep merge of the translations
+    const merged: Record<string, any> = {};
+    
+    // Get all languages
+    const languages = ['ko', 'en'];
+    
+    // For each language, merge the translations
+    languages.forEach(lang => {
+      merged[lang] = {
+        ...(mainPageTranslations as any)[lang],
+        ...(inputPageTranslations as any)[lang]
+      };
+    });
+    
+    return merged;
+  });
 
   // Detect browser language on initial load
   useEffect(() => {
