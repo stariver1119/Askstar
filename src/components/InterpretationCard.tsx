@@ -25,6 +25,11 @@ const InterpretationCard: React.FC<InterpretationCardProps> = ({
     rising: 'bg-purple-600/10 border-purple-400/30'
   };
 
+  // Split content into sentences for better readability
+  const sentences = content
+    .split(/(?<=\.)\s+/) // Split by period followed by whitespace
+    .filter(sentence => sentence.trim().length > 0); // Remove empty sentences
+
   return (
     <motion.div
       className={`rounded-xl ${colors[type]} backdrop-blur-sm border p-5 h-auto min-h-[200px] flex flex-col`}
@@ -36,9 +41,13 @@ const InterpretationCard: React.FC<InterpretationCardProps> = ({
         {title}
       </h3>
       <div className="flex-1 overflow-y-auto">
-        <p className={`text-white/80 ${isGenderSpecific ? 'italic' : ''}`}>
-          {content}
-        </p>
+        <ul className={`text-white/80 ${isGenderSpecific ? 'italic' : ''} space-y-2 list-disc pl-5`}>
+          {sentences.map((sentence, index) => (
+            <li key={index} className="leading-relaxed">
+              {sentence.trim()}
+            </li>
+          ))}
+        </ul>
       </div>
     </motion.div>
   );
