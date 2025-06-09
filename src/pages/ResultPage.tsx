@@ -87,11 +87,50 @@ const ResultPage = () => {
   const risingInterpretation = interpretations.basic_interpretations.ascendant[getZodiacName(formData.risingSign)];
   
   // Get gender-specific interpretations if available
-  const sunGenderInterpretation = formData.gender !== 'other' && 
-    interpretations.gender_specific?.[formData.gender]?.[getZodiacName(formData.sunSign)];
+  // Handle different data structures between English and Korean interpretations
+  const getSunGenderInterpretation = () => {
+    if (formData.gender === 'other') return null;
+    
+    // Korean data has sun interpretations under gender_specific.male/female.sun
+    if (currentLanguage === 'ko') {
+      return interpretations.gender_specific?.[formData.gender]?.sun?.[getZodiacName(formData.sunSign)];
+    } 
+    // English data has limited gender-specific interpretations
+    else {
+      // Try to get from English data structure if available
+      const engInterpretation = interpretations.gender_specific?.[formData.gender]?.[getZodiacName(formData.sunSign)];
+      
+      // If not available, create a custom one
+      if (!engInterpretation) {
+        const signName = getZodiacName(formData.sunSign);
+        const genderText = formData.gender === 'male' ? 'man' : 'woman';
+        
+        return `As a ${genderText} with ${signName} Sun, your core identity and self-expression are influenced by ${signName} energy. ` +
+          `Your ${signName} qualities may be expressed differently based on your gender identity and societal context. ` +
+          `You may find that your approach to leadership, self-expression, and personal goals is shaped by both your ${signName} nature and your experience as a ${genderText}.`;
+      }
+      
+      return engInterpretation;
+    }
+  };
   
-  const moonGenderInterpretation = formData.gender !== 'other' && 
-    interpretations.gender_specific?.[formData.gender]?.[getZodiacName(formData.moonSign)];
+  const getMoonGenderInterpretation = () => {
+    if (formData.gender === 'other') return null;
+    
+    // Korean data has moon interpretations under gender_specific.male/female.moon
+    if (currentLanguage === 'ko') {
+      return interpretations.gender_specific?.[formData.gender]?.moon?.[getZodiacName(formData.moonSign)];
+    } 
+    // English data has moon interpretations directly under gender_specific.male/female
+    else {
+      return interpretations.gender_specific?.[formData.gender]?.[getZodiacName(formData.moonSign)];
+    }
+  };
+  
+  // Get all gender-specific interpretations
+  const sunGenderInterpretation = getSunGenderInterpretation();
+  const moonGenderInterpretation = getMoonGenderInterpretation();
+  // No gender-specific interpretation for Ascendant as per requirement
 
   return (
     <StarryBackground scrollable={true}>
@@ -221,6 +260,8 @@ const ResultPage = () => {
                   delay={1.0}
                 />
               )}
+              
+              {/* No gender-specific interpretation for Ascendant as per requirement */}
             </div>
 
             {/* Action Buttons */}
