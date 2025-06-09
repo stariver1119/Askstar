@@ -9,8 +9,26 @@
 
 ---
 
+[2025-06-09] - ✨ 결과 해석 페이지 개발 및 성별 특화 해석 기능 추가
 
-[2025-06-08] -Added input page with user form and implemented internationalization (i18n) system
+### Added
+- ✅ 사용자의 태양, 달, 상승궁 별자리에 대한 기본 해석을 보여주는 결과 페이지 구현
+- ✅ 성별에 따른 특화된 별자리 해석 기능 추가 (남성/여성 특화 해석)
+- ✅ 한국어와 영어 두 언어에 대한 성별 특화 해석 지원
+- ✅ 별자리 아이콘 및 해석 카드 컴포넌트 개발
+- ✅ 애니메이션 효과를 적용한 결과 표시 UI 개선
+
+### Changed
+- 🔄 별자리 해석 데이터 구조 최적화
+- 🔄 성별 특화 해석을 위한 데이터 접근 로직 개선
+
+### Fixed
+- 🐛 언어 전환 시 해석 텍스트가 올바르게 업데이트되지 않는 문제 해결
+- 🐛 성별 특화 해석이 없는 경우 기본 해석으로 대체되도록 수정
+
+---
+
+[2025-06-08] - Added input page with user form and implemented internationalization (i18n) system
 
 ### Added
 - Implemented internationalization (i18n) system with support for Korean and English languages
