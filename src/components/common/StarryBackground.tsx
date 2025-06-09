@@ -2,9 +2,10 @@ import { useEffect, useRef } from 'react';
 
 interface StarryBackgroundProps {
   children: React.ReactNode;
+  scrollable?: boolean;
 }
 
-const StarryBackground: React.FC<StarryBackgroundProps> = ({ children }) => {
+const StarryBackground: React.FC<StarryBackgroundProps> = ({ children, scrollable = false }) => {
   const constellationRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const StarryBackground: React.FC<StarryBackgroundProps> = ({ children }) => {
   }, []);
 
   return (
-    <div className="fixed inset-0 overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800">
+    <div className={`${scrollable ? 'absolute' : 'fixed'} inset-0 ${scrollable ? 'min-h-full' : 'overflow-hidden'} bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800`}>
       {/* Background stars */}
       <div className="absolute inset-0">
         {[...Array(100)].map((_, i) => (

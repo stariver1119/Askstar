@@ -1,0 +1,36 @@
+{
+  "ko": {
+    "result": {
+      "title": "당신의 별자리 해석 결과",
+      "subtitle": "{name}님의 별자리 분석",
+      "sunSign": "태양궁",
+      "moonSign": "달궁",
+      "risingSign": "상승궁",
+      "sunTitle": "당신의 본질과 정체성",
+      "moonTitle": "당신의 감정과 내면세계",
+      "risingTitle": "당신의 외적 표현과 첫인상",
+      "genderSpecific": "성별 특화 해석",
+      "backToHome": "처음으로 돌아가기",
+      "tryAgain": "다시 시작하기",
+      "compatibility": "궁합 보기",
+      "share": "결과 공유하기"
+    }
+  },
+  "en": {
+    "result": {
+      "title": "Your Astrological Interpretation",
+      "subtitle": "Astrological Analysis for {name}",
+      "sunSign": "Sun Sign",
+      "moonSign": "Moon Sign",
+      "risingSign": "Rising Sign",
+      "sunTitle": "Your Essence and Identity",
+      "moonTitle": "Your Emotions and Inner World",
+      "risingTitle": "Your External Expression and First Impression",
+      "genderSpecific": "Gender-Specific Interpretation",
+      "backToHome": "Back to Home",
+      "tryAgain": "Try Again",
+      "compatibility": "View Compatibility",
+      "share": "Share Results"
+    }
+  }
+}

@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { detectBrowserLanguage } from '../utils/detectLanguage';
 import mainPageTranslations from '../data/mainPageTranslations.json';
 import inputPageTranslations from '../data/inputPageTranslations.json';
+import resultPageTranslations from '../data/resultPageTranslations.json';
 
 // Define the language type
 export type Language = 'ko' | 'en';
@@ -38,7 +39,8 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     languages.forEach(lang => {
       merged[lang] = {
         ...(mainPageTranslations as any)[lang],
-        ...(inputPageTranslations as any)[lang]
+        ...(inputPageTranslations as any)[lang],
+        ...(resultPageTranslations as any)[lang]
       };
     });
     

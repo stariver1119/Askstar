@@ -69,7 +69,8 @@ const InputPage = () => {
     e.preventDefault();
     if (isFormValid) {
       console.log('Form submitted:', formData);
-      // Here you would typically navigate to the next page or process the data
+      // Navigate to the result page with form data
+      navigate('/result', { state: { formData } });
     }
   };
   
@@ -89,7 +90,7 @@ const InputPage = () => {
   ];
 
   return (
-    <StarryBackground>
+    <StarryBackground scrollable={true}>
       <div className="min-h-screen flex flex-col">
         {/* Navigation */}
         <nav className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-8 py-4 bg-black/20 backdrop-blur-sm">
