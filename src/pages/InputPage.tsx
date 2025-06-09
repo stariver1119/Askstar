@@ -148,7 +148,7 @@ const InputPage = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder={t('input.name.placeholder')}
-                        className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-lg px-4 py-3 text-white/90 focus:outline-none focus:border-white/30 transition-colors"
+                        className="w-full bg-white backdrop-blur-md border border-white/10 rounded-lg px-4 py-3 text-black focus:outline-none focus:border-white/30 transition-colors"
                       />
                     </div>
 

@@ -55,12 +55,12 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         <div
           onClick={() => setIsOpen(!isOpen)}
           className={`
-            bg-white/5 backdrop-blur-md border border-white/10 rounded-lg px-4 py-3 cursor-pointer
+            bg-white backdrop-blur-md border border-white/10 rounded-lg px-4 py-3 cursor-pointer
             flex justify-between items-center hover:border-white/20 transition-colors
             ${isOpen ? 'border-white/30' : ''}
           `}
         >
-          <span className={`${!selectedOption ? 'text-white/50' : 'text-white/90'}`}>
+          <span className={`${!selectedOption ? 'text-gray-500' : 'text-black'}`}>
             {selectedOption ? selectedOption.label : placeholder}
           </span>
           <svg
@@ -81,7 +81,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute z-50 mt-1 w-full bg-space-blue/95 backdrop-blur-xl border border-white/20 rounded-lg shadow-xl overflow-visible"
+              className="absolute z-50 mt-1 w-full bg-white backdrop-blur-xl border border-white/20 rounded-lg shadow-xl overflow-visible"
             >
               <div className="max-h-60 overflow-y-auto py-1">
                 {options.map((option) => (
@@ -93,7 +93,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
                     }}
                     className={`
                       px-4 py-2 cursor-pointer hover:bg-white/20 transition-colors
-                      ${option.value === value ? 'bg-white/30 text-white' : 'text-white/90'}
+                      ${option.value === value ? 'bg-white/30 text-black font-medium' : 'text-black'}
                     `}
                   >
                     {option.label}
