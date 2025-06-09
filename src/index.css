@@ -7,7 +7,7 @@
     font-family: 'Playfair Display', serif;
   }
   body {
-    @apply bg-space-blue text-white min-h-screen overflow-hidden;
+    @apply bg-space-blue text-white min-h-screen;
   }
 }
 

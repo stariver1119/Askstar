@@ -44,36 +44,40 @@ const StarryBackground: React.FC<StarryBackgroundProps> = ({ children, scrollabl
     return () => clearInterval(interval);
   }, []);
 
+  // Simplified approach - background is always fixed, content is always scrollable
   return (
-    <div className={`${scrollable ? 'absolute' : 'fixed'} inset-0 ${scrollable ? 'min-h-full' : 'overflow-hidden'} bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800`}>
-      {/* Background stars */}
-      <div className="absolute inset-0">
-        {[...Array(100)].map((_, i) => (
-          <div
-            key={i}
-            className="star"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 2}s`,
-            }}
-          />
-        ))}
+    <>
+      {/* Fixed background that stays in place */}
+      <div className="fixed inset-0 w-full h-full bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 -z-10">
+        {/* Background stars */}
+        <div className="absolute inset-0">
+          {[...Array(100)].map((_, i) => (
+            <div
+              key={i}
+              className="star"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 2}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Animated blobs */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-indigo-600/20 rounded-full filter blur-3xl animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-purple-600/20 rounded-full filter blur-3xl animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-pink-600/20 rounded-full filter blur-3xl animate-blob animation-delay-4000"></div>
+
+        {/* Constellation SVG */}
+        <svg ref={constellationRef} className="constellation" />
       </div>
-
-      {/* Animated blobs */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-indigo-600/20 rounded-full filter blur-3xl animate-blob"></div>
-      <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-purple-600/20 rounded-full filter blur-3xl animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-pink-600/20 rounded-full filter blur-3xl animate-blob animation-delay-4000"></div>
-
-      {/* Constellation SVG */}
-      <svg ref={constellationRef} className="constellation" />
-
-      {/* Content */}
-      <div className="relative z-10 min-h-screen">
+      
+      {/* Content container - always scrollable */}
+      <div className={`relative z-10 ${scrollable ? '' : 'min-h-screen overflow-hidden'}`}>
         {children}
       </div>
-    </div>
+    </>
   );
 };
 

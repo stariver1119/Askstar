@@ -95,7 +95,7 @@ const ResultPage = () => {
 
   return (
     <StarryBackground scrollable={true}>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col w-full overflow-auto">
         {/* Navigation */}
         <nav className="flex justify-between items-center px-8 py-4 bg-space-blue/50 backdrop-blur-sm">
           <div className="w-32">
@@ -119,7 +119,7 @@ const ResultPage = () => {
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 flex flex-col items-center px-4 py-8">
+        <main className="flex-1 flex flex-col items-center px-4 py-8 overflow-y-auto w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -173,7 +173,7 @@ const ResultPage = () => {
             </div>
 
             {/* Interpretation Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 auto-rows-auto">
               {/* Basic Interpretations */}
               <InterpretationCard
                 type="sun"

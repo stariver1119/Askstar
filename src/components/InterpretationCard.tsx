@@ -27,7 +27,7 @@ const InterpretationCard: React.FC<InterpretationCardProps> = ({
 
   return (
     <motion.div
-      className={`rounded-xl ${colors[type]} backdrop-blur-sm border p-5 h-full`}
+      className={`rounded-xl ${colors[type]} backdrop-blur-sm border p-5 h-auto min-h-[200px] flex flex-col`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: delay }}
@@ -35,9 +35,11 @@ const InterpretationCard: React.FC<InterpretationCardProps> = ({
       <h3 className="text-lg font-medium text-white/90 mb-3 flex items-center">
         {title}
       </h3>
-      <p className={`text-white/80 ${isGenderSpecific ? 'italic' : ''}`}>
-        {content}
-      </p>
+      <div className="flex-1 overflow-y-auto">
+        <p className={`text-white/80 ${isGenderSpecific ? 'italic' : ''}`}>
+          {content}
+        </p>
+      </div>
     </motion.div>
   );
 };

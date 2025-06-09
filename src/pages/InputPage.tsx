@@ -91,7 +91,7 @@ const InputPage = () => {
 
   return (
     <StarryBackground scrollable={true}>
-      <div className="min-h-screen flex flex-col">
+      <div className="flex flex-col min-h-screen w-full overflow-auto">
         {/* Navigation */}
         <nav className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-8 py-4 bg-black/20 backdrop-blur-sm">
           <div className="w-32">
@@ -115,7 +115,7 @@ const InputPage = () => {
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 flex items-center justify-center px-4 pt-20 pb-10">
+        <main className="flex-1 flex items-center justify-center px-4 pt-20 pb-10 overflow-y-auto w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
