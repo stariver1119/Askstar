@@ -7,7 +7,7 @@ import { LanguageProvider } from './contexts/LanguageContext'
 function App() {
   return (
     <LanguageProvider>
-      <Router>
+      <Router basename="/Askstar">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/input" element={<InputPage />} />
