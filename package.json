@@ -7,7 +7,8 @@
     "convert-data": "node scripts/convertAllLanguages.js",
     "convert-ko": "node scripts/convertSheetToJson_ko.js",
     "convert-en": "node scripts/convertSheetToJson_en.js",
-    "dev": "npm run convert-data && vite",
+    "dev": "vite",
+    "dev:fresh": "npm run convert-data && vite",
     "build": "npm run convert-data && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
