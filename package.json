@@ -9,7 +9,8 @@
     "convert-en": "node scripts/convertSheetToJson_en.js",
     "dev": "vite",
     "dev:fresh": "npm run convert-data && vite",
-    "build": "npm run convert-data && tsc -b && vite build",
+    "build": "tsc -b && vite build",
+    "build:fresh": "npm run convert-data && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
