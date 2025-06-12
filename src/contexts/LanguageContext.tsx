@@ -5,6 +5,10 @@ import mainPageTranslations from '../data/mainPageTranslations.json';
 import inputPageTranslations from '../data/inputPageTranslations.json';
 import resultPageTranslations from '../data/resultPageTranslations.json';
 
+// Define translation record types
+type TranslationRecord = Record<string, string | Record<string, string | Record<string, string>>>;
+type TranslationsData = Record<Language, TranslationRecord>;
+
 // Define the language type
 export type Language = 'ko' | 'en';
 
@@ -28,19 +32,19 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   const [currentLanguage, setCurrentLanguage] = useState<Language>('en');
   
   // Properly merge the translations by language
-  const [translations] = useState<Record<string, any>>(() => {
+  const [translations] = useState<TranslationsData>(() => {
     // Create a deep merge of the translations
-    const merged: Record<string, any> = {};
+    const merged: TranslationsData = {} as TranslationsData;
     
     // Get all languages
-    const languages = ['ko', 'en'];
+    const languages: Language[] = ['ko', 'en'];
     
     // For each language, merge the translations
     languages.forEach(lang => {
       merged[lang] = {
-        ...(mainPageTranslations as any)[lang],
-        ...(inputPageTranslations as any)[lang],
-        ...(resultPageTranslations as any)[lang]
+        ...(mainPageTranslations as TranslationsData)[lang],
+        ...(inputPageTranslations as TranslationsData)[lang],
+        ...(resultPageTranslations as TranslationsData)[lang]
       };
     });
     
@@ -58,12 +62,12 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     try {
       // Split the key by dots to navigate through the nested object
       const keys = key.split('.');
-      let value = translations[currentLanguage];
+      let value: TranslationRecord | string = translations[currentLanguage];
       
       // Navigate through the nested object
       for (const k of keys) {
-        if (value && value[k] !== undefined) {
-          value = value[k];
+        if (value && typeof value === 'object' && k in value) {
+          value = value[k] as TranslationRecord | string;
         } else {
           // If the key doesn't exist, return the key itself
           return key;

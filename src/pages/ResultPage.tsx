@@ -24,7 +24,22 @@ const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [formData, setFormData] = useState<FormData | null>(null);
-  const [interpretations, setInterpretations] = useState<any>(null);
+  // Define a proper type for interpretations instead of using 'any'
+  interface Interpretations {
+    basic_interpretations: {
+      sun: Record<string, string>;
+      moon: Record<string, string>;
+      ascendant: Record<string, string>;
+    };
+    gender_specific?: {
+      [key: string]: {
+        sun?: Record<string, string>;
+        moon?: Record<string, string>;
+      } | Record<string, string>;
+    };
+  }
+  
+  const [interpretations, setInterpretations] = useState<Interpretations | null>(null);
 
   // Get zodiac sign name in current language
   const getZodiacName = (sign: ZodiacSign): string => {
@@ -89,41 +104,60 @@ const ResultPage = () => {
   // Get gender-specific interpretations if available
   // Handle different data structures between English and Korean interpretations
   const getSunGenderInterpretation = () => {
-    if (formData.gender === 'other') return null;
+    if (!formData || formData.gender === 'other' || !interpretations.gender_specific) return null;
+    
+    const genderData = interpretations.gender_specific[formData.gender];
+    if (!genderData) return null;
     
     // Korean data has sun interpretations under gender_specific.male/female.sun
     if (currentLanguage === 'ko') {
-      return interpretations.gender_specific?.[formData.gender]?.sun?.[getZodiacName(formData.sunSign)];
+      // Check if genderData has a 'sun' property (it's the object type, not string type)
+      if (typeof genderData === 'object' && 'sun' in genderData) {
+        const sunData = genderData.sun;
+        if (sunData && typeof sunData === 'object') {
+          return sunData[getZodiacName(formData.sunSign)];
+        }
+      }
+      return null;
     } 
     // English data has limited gender-specific interpretations
     else {
       // Try to get from English data structure if available
-      const engInterpretation = interpretations.gender_specific?.[formData.gender]?.[getZodiacName(formData.sunSign)];
-      
-      // If not available, create a custom one
-      if (!engInterpretation) {
-        const signName = getZodiacName(formData.sunSign);
-        const genderText = formData.gender === 'male' ? 'man' : 'woman';
+      if (typeof genderData === 'object') {
+        const engInterpretation = (genderData as Record<string, string>)[getZodiacName(formData.sunSign)];
         
-        return `As a ${genderText} with ${signName} Sun, your core identity and self-expression are influenced by ${signName} energy. ` +
-          `Your ${signName} qualities may be expressed differently based on your gender identity and societal context. ` +
-          `You may find that your approach to leadership, self-expression, and personal goals is shaped by both your ${signName} nature and your experience as a ${genderText}.`;
+        // If available, return it
+        if (engInterpretation) return engInterpretation;
       }
       
-      return engInterpretation;
+      // If not available, create a custom one
+      return `As a ${formData.gender === 'male' ? 'man' : 'woman'} with ${getZodiacName(formData.sunSign)} sun sign, you may experience the typical ${getZodiacName(formData.sunSign)} traits with a ${formData.gender === 'male' ? 'masculine' : 'feminine'} expression.`;
     }
   };
   
   const getMoonGenderInterpretation = () => {
-    if (formData.gender === 'other') return null;
+    if (!formData || formData.gender === 'other' || !interpretations.gender_specific) return null;
+    
+    const genderData = interpretations.gender_specific[formData.gender];
+    if (!genderData) return null;
     
     // Korean data has moon interpretations under gender_specific.male/female.moon
     if (currentLanguage === 'ko') {
-      return interpretations.gender_specific?.[formData.gender]?.moon?.[getZodiacName(formData.moonSign)];
+      if (typeof genderData === 'object' && 'moon' in genderData) {
+        const moonData = (genderData as { moon?: Record<string, string> }).moon;
+        if (moonData && typeof moonData === 'object') {
+          return moonData[getZodiacName(formData.moonSign)];
+        }
+      }
+      return null;
     } 
     // English data has moon interpretations directly under gender_specific.male/female
     else {
-      return interpretations.gender_specific?.[formData.gender]?.[getZodiacName(formData.moonSign)];
+      if (typeof genderData === 'object') {
+        const engInterpretation = (genderData as Record<string, string>)[getZodiacName(formData.moonSign)];
+        if (engInterpretation) return engInterpretation;
+      }
+      return null;
     }
   };
   

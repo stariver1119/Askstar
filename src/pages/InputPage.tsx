@@ -1,29 +1,20 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 import StarryBackground from '../components/common/StarryBackground';
 import CustomSelect from '../components/CustomSelect';
+import CitySearch from '../components/CitySearch';
+import { calculateBig3, type BirthData } from '../utils/astrology';
 
-// Define zodiac signs
-const zodiacSigns = [
-  { value: 'aries', labelEn: 'Aries', labelKo: '양자리' },
-  { value: 'taurus', labelEn: 'Taurus', labelKo: '황소자리' },
-  { value: 'gemini', labelEn: 'Gemini', labelKo: '쌍둥이자리' },
-  { value: 'cancer', labelEn: 'Cancer', labelKo: '게자리' },
-  { value: 'leo', labelEn: 'Leo', labelKo: '사자자리' },
-  { value: 'virgo', labelEn: 'Virgo', labelKo: '처녀자리' },
-  { value: 'libra', labelEn: 'Libra', labelKo: '천칭자리' },
-  { value: 'scorpio', labelEn: 'Scorpio', labelKo: '전갈자리' },
-  { value: 'sagittarius', labelEn: 'Sagittarius', labelKo: '궁수자리' },
-  { value: 'capricorn', labelEn: 'Capricorn', labelKo: '염소자리' },
-  { value: 'aquarius', labelEn: 'Aquarius', labelKo: '물병자리' },
-  { value: 'pisces', labelEn: 'Pisces', labelKo: '물고기자리' }
-];
+// No longer need to define zodiac signs as we're calculating them
 
 const InputPage = () => {
-  const { t, currentLanguage } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  
+  // Ref to store selected city coordinates
+  const selectedCityCoords = React.useRef<{latitude: number, longitude: number}>({ latitude: 37.5665, longitude: 126.9780 });
   
   const handleBackClick = () => {
     navigate('/');
@@ -35,23 +26,85 @@ const InputPage = () => {
     gender: '',
     sunSign: '',
     moonSign: '',
-    risingSign: ''
+    risingSign: '',
+    birthYear: '',
+    birthMonth: '',
+    birthDay: '',
+    birthHour: '',
+    birthMinute: '',
+    city: ''
   });
+  
+  // Form errors
+  const [errors, setErrors] = useState<Record<string, string>>({});
   
   // Form validation
   const [isFormValid, setIsFormValid] = useState(false);
   
   // Check form validity whenever form data changes
   useEffect(() => {
-    const { name, gender, sunSign, moonSign, risingSign } = formData;
-    setIsFormValid(
-      name.trim() !== '' && 
-      gender !== '' && 
-      sunSign !== '' && 
-      moonSign !== '' && 
-      risingSign !== ''
-    );
-  }, [formData]);
+    const { 
+      name, gender, birthYear, birthMonth, birthDay, 
+      birthHour, birthMinute, city 
+    } = formData;
+    
+    // Reset errors
+    const newErrors: Record<string, string> = {};
+    
+    // Validate name
+    if (name.trim() === '') {
+      newErrors.name = t('input.error.required');
+    }
+    
+    // Validate gender
+    if (gender === '') {
+      newErrors.gender = t('input.error.required');
+    }
+    
+    // Validate birth date
+    if (birthYear === '' || birthMonth === '' || birthDay === '') {
+      newErrors.birthDate = t('input.error.required');
+    } else {
+      // Check if date is valid
+      const year = parseInt(birthYear);
+      const month = parseInt(birthMonth) - 1; // JavaScript months are 0-indexed
+      const day = parseInt(birthDay);
+      
+      const date = new Date(year, month, day);
+      if (
+        date.getFullYear() !== year ||
+        date.getMonth() !== month ||
+        date.getDate() !== day ||
+        year < 1900 || year > new Date().getFullYear()
+      ) {
+        newErrors.birthDate = t('input.error.invalidDate');
+      }
+    }
+    
+    // Validate birth time
+    if (birthHour === '' || birthMinute === '') {
+      newErrors.birthTime = t('input.error.required');
+    } else {
+      // Check if time is valid
+      const hour = parseInt(birthHour);
+      const minute = parseInt(birthMinute);
+      
+      if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+        newErrors.birthTime = t('input.error.invalidTime');
+      }
+    }
+    
+    // Validate city
+    if (city === '') {
+      newErrors.city = t('input.error.required');
+    }
+    
+    // Update errors state
+    setErrors(newErrors);
+    
+    // Form is valid if there are no errors
+    setIsFormValid(Object.keys(newErrors).length === 0);
+  }, [formData, t]);
   
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,22 +117,95 @@ const InputPage = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
   
+  // Handle city selection
+  const handleCitySelect = (city: string, latitude: number, longitude: number) => {
+    // Store city and coordinates in form data
+    setFormData(prev => ({
+      ...prev,
+      city
+    }));
+    
+    // Store coordinates in a ref for use in calculation
+    if (city && latitude && longitude) {
+      // Use these values in calculateBig3Signs
+      selectedCityCoords.current = { latitude, longitude };
+    }
+    
+    // Update errors for city field
+    setErrors(prev => ({
+      ...prev,
+      city: city ? '' : t('input.error.required')
+    }));
+  };
+
+  // Calculate Big 3 based on birth data
+  const calculateBig3Signs = () => {
+    try {
+      const birthData: BirthData = {
+        year: parseInt(formData.birthYear),
+        month: parseInt(formData.birthMonth),
+        day: parseInt(formData.birthDay),
+        hour: parseInt(formData.birthHour),
+        minute: parseInt(formData.birthMinute),
+        latitude: selectedCityCoords.current.latitude,
+        longitude: selectedCityCoords.current.longitude
+      };
+
+      // Calculate Big 3 using the utility function
+      const big3 = calculateBig3(birthData);
+      
+      // Update form data with calculated signs
+      setFormData(prev => ({
+        ...prev,
+        sunSign: big3.sunSign,
+        moonSign: big3.moonSign,
+        risingSign: big3.risingSign
+      }));
+      
+      return big3;
+    } catch (error) {
+      console.error('Error calculating Big 3:', error);
+      return null;
+    }
+  };
+
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (isFormValid) {
-      console.log('Form submitted:', formData);
-      // Navigate to the result page with form data
-      navigate('/result', { state: { formData } });
+      try {
+        // Calculate Big 3 signs
+        const big3 = calculateBig3Signs();
+        
+        if (big3) {
+          // Navigate to result page with form data
+          navigate('/result', {
+            state: {
+              formData: {
+                name: formData.name,
+                gender: formData.gender,
+                sunSign: big3.sunSign,
+                moonSign: big3.moonSign,
+                risingSign: big3.risingSign
+              }
+            }
+          });
+        } else {
+          // Handle calculation error
+          setErrors(prev => ({
+            ...prev,
+            calculation: t('input.error.calculation')
+          }));
+        }
+      } catch (error) {
+        console.error('Error calculating Big 3 signs:', error);
+        setErrors(prev => ({
+          ...prev,
+          calculation: t('input.error.calculation')
+        }));
+      }
     }
-  };
-  
-  // Get zodiac options with proper language labels
-  const getZodiacOptions = () => {
-    return zodiacSigns.map(sign => ({
-      value: sign.value,
-      label: currentLanguage === 'ko' ? sign.labelKo : sign.labelEn
-    }));
   };
   
   // Gender options
@@ -148,8 +274,9 @@ const InputPage = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder={t('input.name.placeholder')}
-                        className="w-full bg-white backdrop-blur-md border border-white/10 rounded-lg px-4 py-3 text-black focus:outline-none focus:border-white/30 transition-colors"
+                        className={`w-full bg-white backdrop-blur-md border rounded-lg px-4 py-3 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.name ? 'border-red-500' : 'border-white/10'}`}
                       />
+                      {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                     </div>
 
                     {/* Gender select */}
@@ -165,51 +292,111 @@ const InputPage = () => {
                         </svg>
                       }
                     />
-
-                    {/* Sun sign select */}
-                    <CustomSelect
-                      label={t('input.sun.label')}
-                      placeholder={t('input.sun.placeholder')}
-                      options={getZodiacOptions()}
-                      value={formData.sunSign}
-                      onChange={(value) => handleSelectChange('sunSign', value)}
-                      icon={
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    
+                    {/* Birth Date */}
+                    <div className="mb-4">
+                      <label className="block text-white/90 text-sm mb-2 flex items-center">
+                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
-                      }
-                    />
+                        {t('input.birthDate.label')}
+                      </label>
+                      <div className="grid grid-cols-3 gap-2">
+                        {/* Year */}
+                        <input
+                          type="number"
+                          name="birthYear"
+                          value={formData.birthYear}
+                          onChange={handleInputChange}
+                          placeholder={t('input.birthDate.year')}
+                          min="1900"
+                          max="2025"
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.birthDate ? 'border-red-500' : 'border-white/10'}`}
+                        />
+                        {/* Month */}
+                        <input
+                          type="number"
+                          name="birthMonth"
+                          value={formData.birthMonth}
+                          onChange={handleInputChange}
+                          placeholder={t('input.birthDate.month')}
+                          min="1"
+                          max="12"
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.birthDate ? 'border-red-500' : 'border-white/10'}`}
+                        />
+                        {/* Day */}
+                        <input
+                          type="number"
+                          name="birthDay"
+                          value={formData.birthDay}
+                          onChange={handleInputChange}
+                          placeholder={t('input.birthDate.day')}
+                          min="1"
+                          max="31"
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.birthDate ? 'border-red-500' : 'border-white/10'}`}
+                        />
+                      </div>
+                      {errors.birthDate && <p className="text-red-500 text-xs mt-1">{errors.birthDate}</p>}
+                    </div>
+                    
+                    {/* Birth Time */}
+                    <div className="mb-4">
+                      <label className="block text-white/90 text-sm mb-2 flex items-center">
+                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        {t('input.birthTime.label')}
+                      </label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {/* Hour */}
+                        <input
+                          type="number"
+                          name="birthHour"
+                          value={formData.birthHour}
+                          onChange={handleInputChange}
+                          placeholder={t('input.birthTime.hour')}
+                          min="0"
+                          max="23"
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.birthTime ? 'border-red-500' : 'border-white/10'}`}
+                        />
+                        {/* Minute */}
+                        <input
+                          type="number"
+                          name="birthMinute"
+                          value={formData.birthMinute}
+                          onChange={handleInputChange}
+                          placeholder={t('input.birthTime.minute')}
+                          min="0"
+                          max="59"
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.birthTime ? 'border-red-500' : 'border-white/10'}`}
+                        />
+                      </div>
+                      {errors.birthTime && <p className="text-red-500 text-xs mt-1">{errors.birthTime}</p>}
+                    </div>
                   </div>
 
                   {/* Right column */}
                   <div className="space-y-4">
-                    {/* Moon sign select */}
-                    <CustomSelect
-                      label={t('input.moon.label')}
-                      placeholder={t('input.moon.placeholder')}
-                      options={getZodiacOptions()}
-                      value={formData.moonSign}
-                      onChange={(value) => handleSelectChange('moonSign', value)}
+                    {/* City Search */}
+                    <CitySearch
+                      label={t('input.city.label')}
+                      placeholder={t('input.city.placeholder')}
+                      value={formData.city}
+                      onChange={handleCitySelect}
+                      error={errors.city}
                       icon={
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                       }
                     />
-
-                    {/* Rising sign select */}
-                    <CustomSelect
-                      label={t('input.rising.label')}
-                      placeholder={t('input.rising.placeholder')}
-                      options={getZodiacOptions()}
-                      value={formData.risingSign}
-                      onChange={(value) => handleSelectChange('risingSign', value)}
-                      icon={
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                        </svg>
-                      }
-                    />
+                    
+                    {/* Information about calculation */}
+                    <div className="bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10 mt-4">
+                      <h3 className="text-white/90 text-sm font-medium mb-2">{t('input.calculation.title')}</h3>
+                      <p className="text-white/70 text-xs">{t('input.calculation.description')}</p>
+                    </div>
 
                     {/* Submit button - positioned at the bottom of the right column */}
                     <div className="pt-8 flex justify-between items-center">
