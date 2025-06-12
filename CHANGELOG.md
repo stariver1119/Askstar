@@ -9,6 +9,30 @@
 
 ---
 
+[2025-06-12] - 🔄 3rd Palace Analysis Algorithm Update & Input Page Refinement
+
+### Changed
+- 🔄 Updated 3rd palace analysis algorithm for improved accuracy
+- 🔄 Refined InputPage error handling and validation logic
+
+### Fixed
+- 🐛 Fixed city field validation to make it required for form submission
+- 🐛 Improved error message display to only show after user interaction
+- 🐛 Fixed Start Analysis button state to remain disabled until all fields are valid
+
+---
+
+[2025-06-11] - 🚀 Optimization, Build & Distribution
+
+### Changed
+- 🔧 Optimized application performance for production
+- 🔄 Updated 3 palace analysis algorithm for better results
+
+### Added
+- 📦 Built and Deploy production version
+
+---
+
 [2025-06-09] -   ✨ 결과 해석 페이지 개발 및 성별 특화 해석 기능 추가
 
 ### Added
