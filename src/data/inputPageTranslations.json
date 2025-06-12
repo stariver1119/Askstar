@@ -16,7 +16,13 @@
       "rising": { "label": "상승궁 (어센던트)", "placeholder": "상승궁을 선택해주세요" },
       "submit": "분석 시작하기",
       "back": "이전으로",
-      "progress": "2/3"
+      "progress": "2/3",
+      "error": {
+        "general": "입력 정보를 확인해주세요",
+        "required": "필수 입력 항목입니다",
+        "invalidDate": "유효하지 않은 날짜입니다",
+        "invalidTime": "유효하지 않은 시간입니다"
+      }
     }
   },
   "en": {
@@ -36,7 +42,13 @@
       "rising": { "label": "Rising Sign (Ascendant)", "placeholder": "Select your rising sign" },
       "submit": "Start Analysis",
       "back": "Go Back",
-      "progress": "2/3"
+      "progress": "2/3",
+      "error": {
+        "general": "Please check your input information",
+        "required": "This field is required",
+        "invalidDate": "Invalid date",
+        "invalidTime": "Invalid time"
+      }
     }
   }
 }

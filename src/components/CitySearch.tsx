@@ -8,6 +8,7 @@ interface CitySearchProps {
   label: string;
   icon?: React.ReactNode;
   error?: string;
+  onInputChange?: () => void; // Added prop for tracking input attempts
 }
 
 interface CityResult {
@@ -42,7 +43,8 @@ const CitySearch: React.FC<CitySearchProps> = ({
   placeholder,
   label,
   icon,
-  error
+  error,
+  onInputChange
 }) => {
   const [inputValue, setInputValue] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
@@ -58,6 +60,11 @@ const CitySearch: React.FC<CitySearchProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setInputValue(newValue);
+    
+    // Call onInputChange prop if provided to track user attempt
+    if (onInputChange) {
+      onInputChange();
+    }
     
     // Clear previous timer
     if (debounceTimerRef.current) {

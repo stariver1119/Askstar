@@ -20,7 +20,7 @@ const InputPage = () => {
     navigate('/');
   };
   
-  // Form state
+  // Form state and validation
   const [formData, setFormData] = useState({
     name: '',
     gender: '',
@@ -35,67 +35,57 @@ const InputPage = () => {
     city: ''
   });
   
-  // Form errors
+  // Error state
   const [errors, setErrors] = useState<Record<string, string>>({});
-  
-  // Form validation
   const [isFormValid, setIsFormValid] = useState(false);
+  const [touchedFields, setTouchedFields] = useState<Record<string, boolean>>({});
+  const [cityAttempted, setCityAttempted] = useState<boolean>(false);
   
   // Check form validity whenever form data changes
   useEffect(() => {
-    const { 
-      name, gender, birthYear, birthMonth, birthDay, 
-      birthHour, birthMinute, city 
-    } = formData;
-    
-    // Reset errors
     const newErrors: Record<string, string> = {};
+    const invalidFields: Record<string, boolean> = {};
     
     // Validate name
-    if (name.trim() === '') {
+    if (formData.name === '') {
       newErrors.name = t('input.error.required');
     }
     
     // Validate gender
-    if (gender === '') {
+    if (formData.gender === '') {
       newErrors.gender = t('input.error.required');
     }
     
     // Validate birth date
-    if (birthYear === '' || birthMonth === '' || birthDay === '') {
+    if (formData.birthYear === '' || formData.birthMonth === '' || formData.birthDay === '') {
       newErrors.birthDate = t('input.error.required');
     } else {
-      // Check if date is valid
-      const year = parseInt(birthYear);
-      const month = parseInt(birthMonth) - 1; // JavaScript months are 0-indexed
-      const day = parseInt(birthDay);
+      const year = parseInt(formData.birthYear);
+      const month = parseInt(formData.birthMonth);
+      const day = parseInt(formData.birthDay);
       
-      const date = new Date(year, month, day);
-      if (
-        date.getFullYear() !== year ||
-        date.getMonth() !== month ||
-        date.getDate() !== day ||
-        year < 1900 || year > new Date().getFullYear()
-      ) {
+      // Simple date validation
+      if (year < 1900 || year > 2025 || month < 1 || month > 12 || day < 1 || day > 31) {
         newErrors.birthDate = t('input.error.invalidDate');
+        invalidFields.birthDate = true;
       }
     }
     
     // Validate birth time
-    if (birthHour === '' || birthMinute === '') {
+    if (formData.birthHour === '' || formData.birthMinute === '') {
       newErrors.birthTime = t('input.error.required');
     } else {
-      // Check if time is valid
-      const hour = parseInt(birthHour);
-      const minute = parseInt(birthMinute);
+      const hour = parseInt(formData.birthHour);
+      const minute = parseInt(formData.birthMinute);
       
       if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
         newErrors.birthTime = t('input.error.invalidTime');
+        invalidFields.birthTime = true;
       }
     }
     
-    // Validate city
-    if (city === '') {
+    // City is always required for form submission
+    if (formData.city === '') {
       newErrors.city = t('input.error.required');
     }
     
@@ -104,17 +94,23 @@ const InputPage = () => {
     
     // Form is valid if there are no errors
     setIsFormValid(Object.keys(newErrors).length === 0);
-  }, [formData, t]);
+    
+    // No need to set show errors state anymore, errors are shown based on cityAttempted
+  }, [formData, t, touchedFields]);
   
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    // Mark field as touched
+    setTouchedFields(prev => ({ ...prev, [name]: true }));
   };
   
   // Handle select changes
   const handleSelectChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
+    // Mark field as touched
+    setTouchedFields(prev => ({ ...prev, [name]: true }));
   };
   
   // Handle city selection
@@ -122,9 +118,14 @@ const InputPage = () => {
     // Store city and coordinates in form data
     setFormData(prev => ({
       ...prev,
-      city
+      city,
+      latitude: latitude.toString(),
+      longitude: longitude.toString(),
     }));
-    
+    // Mark city field as touched
+    setTouchedFields(prev => ({ ...prev, city: true }));
+    // Mark that user has attempted to enter city data
+    setCityAttempted(true);
     // Store coordinates in a ref for use in calculation
     if (city && latitude && longitude) {
       // Use these values in calculateBig3Signs
@@ -172,6 +173,20 @@ const InputPage = () => {
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Form validation is handled by the useEffect
+    const allFields = {
+      name: true,
+      gender: true,
+      birthYear: true,
+      birthMonth: true,
+      birthDay: true,
+      birthHour: true,
+      birthMinute: true,
+      city: true
+    };
+    setTouchedFields(allFields);
+    // City is attempted when form is submitted
+    setCityAttempted(true);
     
     if (isFormValid) {
       try {
@@ -274,9 +289,8 @@ const InputPage = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder={t('input.name.placeholder')}
-                        className={`w-full bg-white backdrop-blur-md border rounded-lg px-4 py-3 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.name ? 'border-red-500' : 'border-white/10'}`}
+                        className={`w-full bg-white backdrop-blur-md border rounded-lg px-4 py-3 text-black focus:outline-none focus:border-white/30 transition-colors`}
                       />
-                      {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                     </div>
 
                     {/* Gender select */}
@@ -311,7 +325,7 @@ const InputPage = () => {
                           placeholder={t('input.birthDate.year')}
                           min="1900"
                           max="2025"
-                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.birthDate ? 'border-red-500' : 'border-white/10'}`}
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors`}
                         />
                         {/* Month */}
                         <input
@@ -322,7 +336,7 @@ const InputPage = () => {
                           placeholder={t('input.birthDate.month')}
                           min="1"
                           max="12"
-                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.birthDate ? 'border-red-500' : 'border-white/10'}`}
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors`}
                         />
                         {/* Day */}
                         <input
@@ -333,10 +347,9 @@ const InputPage = () => {
                           placeholder={t('input.birthDate.day')}
                           min="1"
                           max="31"
-                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.birthDate ? 'border-red-500' : 'border-white/10'}`}
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors`}
                         />
                       </div>
-                      {errors.birthDate && <p className="text-red-500 text-xs mt-1">{errors.birthDate}</p>}
                     </div>
                     
                     {/* Birth Time */}
@@ -357,7 +370,7 @@ const InputPage = () => {
                           placeholder={t('input.birthTime.hour')}
                           min="0"
                           max="23"
-                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.birthTime ? 'border-red-500' : 'border-white/10'}`}
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors`}
                         />
                         {/* Minute */}
                         <input
@@ -368,10 +381,9 @@ const InputPage = () => {
                           placeholder={t('input.birthTime.minute')}
                           min="0"
                           max="59"
-                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors ${errors.birthTime ? 'border-red-500' : 'border-white/10'}`}
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors`}
                         />
                       </div>
-                      {errors.birthTime && <p className="text-red-500 text-xs mt-1">{errors.birthTime}</p>}
                     </div>
                   </div>
 
@@ -383,7 +395,8 @@ const InputPage = () => {
                       placeholder={t('input.city.placeholder')}
                       value={formData.city}
                       onChange={handleCitySelect}
-                      error={errors.city}
+                      error={cityAttempted && errors.city ? errors.city : undefined}
+                      onInputChange={() => setCityAttempted(true)}
                       icon={
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -399,27 +412,38 @@ const InputPage = () => {
                     </div>
 
                     {/* Submit button - positioned at the bottom of the right column */}
-                    <div className="pt-8 flex justify-between items-center">
-                      <button
-                        type="button"
-                        onClick={handleBackClick}
-                        className="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/80"
-                      >
-                        {t('input.back')}
-                      </button>
+                    <div className="pt-8 flex flex-col space-y-4">
+                      {/* Single error message display */}
+                      {cityAttempted && !isFormValid && (
+                        <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-center">
+                          <p className="text-red-400 text-sm">
+                            {t('input.error.general')}
+                          </p>
+                        </div>
+                      )}
                       
-                      <button
-                        type="submit"
-                        disabled={!isFormValid}
-                        className={`
-                          px-8 py-3 rounded-full transition-all duration-300 transform
-                          ${isFormValid 
-                            ? 'bg-star-gold/20 hover:bg-star-gold/30 text-white/90 border border-star-gold/30 hover:border-star-gold/50 hover:scale-105' 
-                            : 'bg-white/5 text-white/30 border border-white/10 cursor-not-allowed'}
-                        `}
-                      >
-                        {t('input.submit')}
-                      </button>
+                      <div className="flex justify-between items-center">
+                        <button
+                          type="button"
+                          onClick={handleBackClick}
+                          className="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white/80"
+                        >
+                          {t('input.back')}
+                        </button>
+                        
+                        <button
+                          type="submit"
+                          disabled={!isFormValid}
+                          className={`
+                            px-8 py-3 rounded-full transition-all duration-300 transform
+                            ${isFormValid 
+                              ? 'bg-star-gold/20 hover:bg-star-gold/30 text-white/90 border border-star-gold/30 hover:border-star-gold/50 hover:scale-105' 
+                              : 'bg-white/5 text-white/30 border border-white/10 cursor-not-allowed'}
+                          `}
+                        >
+                          {t('input.submit')}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </form>
