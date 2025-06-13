@@ -2,7 +2,7 @@
   "ko": {
     "input": {
       "title": "별자리 분석을 위한 정보 입력",
-      "subtitle": "당신의 Big 3 정보를 알려주세요",
+      "subtitle": "별에게 당신을 소개해주세요",
       "name": { "label": "이름", "placeholder": "이름을 입력해주세요" },
       "gender": { 
         "label": "성별", 
@@ -18,12 +18,12 @@
         "day": "일"
       },
       "birthTime": {
-        "label": "출생 시간",
+        "label": "태어난 시간",
         "hour": "시",
         "minute": "분"
       },
       "city": {
-        "label": "출생 도시",
+        "label": "태어난 도시",
         "placeholder": "도시를 검색하세요"
       },
       "sun": { "label": "태양궁 별자리", "placeholder": "태양궁을 선택해주세요" },
@@ -42,8 +42,8 @@
   },
   "en": {
     "input": {
-      "title": "Enter Your Astrological Information",
-      "subtitle": "Tell us about your Big 3",
+      "title": "Enter Your Details",
+      "subtitle": "Tell star about you",
       "name": { "label": "Name", "placeholder": "Enter your name" },
       "gender": { 
         "label": "Gender", 

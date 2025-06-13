@@ -422,12 +422,6 @@ const InputPage = () => {
                         </svg>
                       }
                     />
-                    
-                    {/* Information about calculation */}
-                    <div className="bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10 mt-4">
-                      <h3 className="text-white/90 text-sm font-medium mb-2">{t('input.calculation.title')}</h3>
-                      <p className="text-white/70 text-xs">{t('input.calculation.description')}</p>
-                    </div>
 
                     {/* Submit button - positioned at the bottom of the right column */}
                     <div className="pt-8 flex flex-col space-y-4">
