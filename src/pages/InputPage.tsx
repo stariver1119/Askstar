@@ -343,7 +343,7 @@ const InputPage = () => {
                         </svg>
                         {t('input.birthDate.label')}
                       </label>
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="flex items-center">
                         {/* Year */}
                         <input
                           type="number"
@@ -355,6 +355,8 @@ const InputPage = () => {
                           max="2025"
                           className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors`}
                         />
+                        {/* Separator */}
+                        <span className="text-white/50 mx-2 text-lg">/</span>
                         {/* Month */}
                         <input
                           type="number"
@@ -366,6 +368,8 @@ const InputPage = () => {
                           max="12"
                           className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors`}
                         />
+                        {/* Separator */}
+                        <span className="text-white/50 mx-2 text-lg">/</span>
                         {/* Day */}
                         <input
                           type="number"
@@ -388,7 +392,7 @@ const InputPage = () => {
                         </svg>
                         {t('input.birthTime.label')}
                       </label>
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="flex items-center">
                         {/* Hour */}
                         <input
                           type="number"
@@ -400,6 +404,8 @@ const InputPage = () => {
                           max="23"
                           className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors`}
                         />
+                        {/* Separator */}
+                        <span className="text-white/50 mx-2 text-lg">:</span>
                         {/* Minute */}
                         <input
                           type="number"
