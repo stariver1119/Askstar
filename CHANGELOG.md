@@ -7,6 +7,41 @@
 - 카테고리: Added, Changed, Fixed, Removed
 - 이모지와 상세 설명을 포함합니다
 
+[2025-06-13] - 📝 Result Page UI Details & Mobile Menu Toggle
+
+### Added
+- ✅ Result Page UI Details
+- ✅ Mobile Menu Toggle
+
+### Changed
+- 🔄 Result Page UI Details
+- 🔄 Mobile Menu Toggle
+
+### Fixed
+- 🐛 Result Page UI Details
+- 🐛 Mobile Menu Toggle
+
+### Changed
+- 🔄 InputPage UI 개선
+- 라벨명 미부여 및 i18n 통합 안된 부분 개선
+- INPUT Field 크기 및 그리드 레이아웃 최적화
+- 날짜/시간 구분자('/', ':') 추가로 가독성 향상
+- 오류 메시지 알림 방식 및 위치 개선
+- ResultPage UI 개선
+- '궁합 보러가기', '결과 공유하기' 버튼에 준비중 표시 추가
+- 버튼 호버 시 말풍선으로 "다음 업데이트로 준비중입니다" 안내 메시지 표시
+- TextBalloon 컴포넌트 구현으로 일관된 사용자 경험 제공
+- MainPage 개선
+- 네비게이터 모바일 버전 업데이트
+- 석삼자(태양궁, 달궁, 상승궁) 토글화 구현
+- 버그 수정
+- 태양궁 계산 시 발생하던 1일 오차 문제 해결
+
+### Technical Improvements
+- i18n 통합 시스템 강화
+- 다국어 지원을 위한 번역 파일 구조화
+- 반응형 디자인 개선으로 다양한 디바이스 지원 강화
+
 ---
 
 [2025-06-12] - 🔄 3rd Palace Analysis Algorithm Update & Input Page Refinement
