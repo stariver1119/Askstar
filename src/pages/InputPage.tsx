@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 import StarryBackground from '../components/common/StarryBackground';
-import CustomSelect from '../components/CustomSelect';
 import CitySearch from '../components/CitySearch';
 import { calculateBig3, type BirthData } from '../utils/astrology';
 import { calculateSunSign } from '../utils/sunSignCalculator';
@@ -100,15 +99,8 @@ const InputPage = () => {
   }, [formData, t, touchedFields]);
   
   // Handle input changes
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    // Mark field as touched
-    setTouchedFields(prev => ({ ...prev, [name]: true }));
-  };
-  
-  // Handle select changes
-  const handleSelectChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
     // Mark field as touched
     setTouchedFields(prev => ({ ...prev, [name]: true }));
@@ -281,51 +273,67 @@ const InputPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-full max-w-4xl relative z-30"
+            className="w-full max-w-2xl relative z-30"
           >
-            <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 shadow-xl overflow-visible">
-              <div className="p-6 md:p-8">
-                <h1 className="text-2xl md:text-3xl font-light text-white/90 mb-2">
-                  {t('input.title')}
-                </h1>
-                <p className="text-white/70 mb-6">
-                  {t('input.subtitle')}
-                </p>
+            <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 shadow-xl overflow-visible max-w-2xl mx-auto">
+              <div className="p-6 md:p-8 flex flex-col items-center">
+                <div className="max-w-xl w-full mb-6">
+                  <h1 className="text-2xl md:text-3xl font-light text-white/90 mb-2 text-center">
+                    {t('input.title')}
+                  </h1>
+                  <p className="text-white/70 text-center">
+                    {t('input.subtitle')}
+                  </p>
+                </div>
 
-                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Left column */}
-                  <div className="space-y-4">
-                    {/* Name input */}
-                    <div className="mb-4">
-                      <label className="block text-white/90 text-sm mb-2 flex items-center">
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                        {t('input.name.label')}
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        placeholder={t('input.name.placeholder')}
-                        className={`w-full bg-white backdrop-blur-md border rounded-lg px-4 py-3 text-black focus:outline-none focus:border-white/30 transition-colors`}
-                      />
+                <form onSubmit={handleSubmit} className="flex flex-col max-w-xl mx-auto space-y-4 w-full">
+                  {/* Single column layout */}
+                  <div className="space-y-4 w-full">
+                    {/* Name and Gender in one row */}
+                    <div className="grid grid-cols-3 gap-2 mb-4">
+                      {/* Name input - 2 columns */}
+                      <div className="col-span-2">
+                        <label className="block text-white/90 text-sm mb-2 flex items-center">
+                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                          </svg>
+                          {t('input.name.label')}
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          placeholder={t('input.name.placeholder')}
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 text-black focus:outline-none focus:border-white/30 transition-colors`}
+                          style={{ boxSizing: 'border-box', height: '40px' }}
+                        />
+                      </div>
+
+                      {/* Gender select - 1 column */}
+                      <div>
+                        <label className="block text-white/90 text-sm mb-2 flex items-center">
+                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                          </svg>
+                          {t('input.gender.label')}
+                        </label>
+                        <select
+                          name="gender"
+                          value={formData.gender}
+                          onChange={handleInputChange}
+                          className={`w-full bg-white backdrop-blur-md border rounded-lg px-3 py-2 focus:outline-none focus:border-white/30 transition-colors ${formData.gender === '' ? 'text-gray-400' : 'text-black'}`}
+                          style={{ boxSizing: 'border-box', height: '40px' }}
+                        >
+                          <option value="">{t('input.gender.placeholder')}</option>
+                          {genderOptions.map(option => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
-
-                    {/* Gender select */}
-                    <CustomSelect
-                      label={t('input.gender.label')}
-                      placeholder={t('input.gender.placeholder')}
-                      options={genderOptions}
-                      value={formData.gender}
-                      onChange={(value) => handleSelectChange('gender', value)}
-                      icon={
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
-                      }
-                    />
                     
                     {/* Birth Date */}
                     <div className="mb-4">
@@ -406,9 +414,9 @@ const InputPage = () => {
                       </div>
                     </div>
                   </div>
-
-                  {/* Right column */}
-                  <div className="space-y-4">
+                  
+                  {/* City Search */}
+                  <div className="space-y-4 w-full">
                     {/* City Search */}
                     <CitySearch
                       label={t('input.city.label')}

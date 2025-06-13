@@ -55,7 +55,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         <div
           onClick={() => setIsOpen(!isOpen)}
           className={`
-            bg-white backdrop-blur-md border border-white/10 rounded-lg px-4 py-3 cursor-pointer
+            bg-white backdrop-blur-md border border-white/10 rounded-lg px-3 py-2 cursor-pointer
             flex justify-between items-center hover:border-white/20 transition-colors
             ${isOpen ? 'border-white/30' : ''}
           `}

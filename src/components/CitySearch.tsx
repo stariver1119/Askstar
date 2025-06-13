@@ -176,7 +176,7 @@ const CitySearch: React.FC<CitySearchProps> = ({
         className="relative"
       >
         <div className={`
-          bg-white backdrop-blur-md border rounded-lg px-4 py-3 flex justify-between items-center
+          bg-white backdrop-blur-md border rounded-lg px-3 py-2 flex justify-between items-center
           transition-colors relative
           ${error ? 'border-red-500' : isOpen ? 'border-white/30' : 'border-white/10 hover:border-white/20'}
         `}>
