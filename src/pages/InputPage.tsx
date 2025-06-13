@@ -6,7 +6,7 @@ import StarryBackground from '../components/common/StarryBackground';
 import CustomSelect from '../components/CustomSelect';
 import CitySearch from '../components/CitySearch';
 import { calculateBig3, type BirthData } from '../utils/astrology';
-import { correctDateForAstrology } from '../utils/dateCorrection';
+import { calculateSunSign } from '../utils/sunSignCalculator';
 
 // No longer need to define zodiac signs as we're calculating them
 
@@ -148,30 +148,32 @@ const InputPage = () => {
       const birthMonth = parseInt(formData.birthMonth);
       const birthDay = parseInt(formData.birthDay);
       
-      // Apply date correction for astrological calculations
-      // This corrects the date by adding one day to account for UTC differences
-      const correctedDate = correctDateForAstrology(
-        birthYear,
-        birthMonth,
-        birthDay
-      );
+      console.log(`Birth date: ${birthYear}-${birthMonth}-${birthDay}`);
       
-      console.log(`Original birth date: ${birthYear}-${birthMonth}-${birthDay}`);
-      console.log(`Corrected date for astrology: ${correctedDate.year}-${correctedDate.month}-${correctedDate.day}`);
-      
-      // Create birth data with corrected date
+      // Create birth data with original date
       const birthData: BirthData = {
-        year: correctedDate.year,
-        month: correctedDate.month,
-        day: correctedDate.day,
+        year: birthYear,
+        month: birthMonth,
+        day: birthDay,
         hour: parseInt(formData.birthHour),
         minute: parseInt(formData.birthMinute),
         latitude: selectedCityCoords.current.latitude,
         longitude: selectedCityCoords.current.longitude
       };
 
-      // Calculate Big 3 using the utility function
-      const big3 = calculateBig3(birthData);
+      // Calculate Moon and Rising using the astrology library
+      const big3Result = calculateBig3(birthData);
+      
+      // Calculate Sun sign manually using our custom function
+      const manualSunSign = calculateSunSign(birthMonth, birthDay);
+      console.log(`Manual Sun sign calculation: ${manualSunSign}`);
+      
+      // Create final result with manual Sun sign and library-calculated Moon and Rising
+      const big3 = {
+        sunSign: manualSunSign,
+        moonSign: big3Result.moonSign,
+        risingSign: big3Result.risingSign
+      };
       
       // Update form data with calculated signs
       setFormData(prev => ({
