@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
+import TextBalloon from '../components/common/TextBalloon';
 import StarryBackground from '../components/common/StarryBackground';
 import ZodiacIcon from '../components/ZodiacIcon';
 import type { ZodiacSign } from '../components/ZodiacIcon';
@@ -316,19 +317,23 @@ const ResultPage = () => {
                 {t('result.tryAgain')}
               </motion.button>
               
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                className="px-6 py-2 bg-purple-600/20 hover:bg-purple-600/30 rounded-full transition-colors duration-300 text-white/90 border border-purple-500/30"
-              >
-                {t('result.compatibility')}
-              </motion.button>
+              <TextBalloon text={t('tooltip.preparing')} position="top">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className="px-6 py-2 bg-purple-600/20 hover:bg-purple-600/30 rounded-full transition-colors duration-300 text-white/90 border border-purple-500/30"
+                >
+                  {t('result.compatibility')}
+                </motion.button>
+              </TextBalloon>
               
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                className="px-6 py-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-full transition-colors duration-300 text-white/90 border border-blue-400/30"
-              >
-                {t('result.share')}
-              </motion.button>
+              <TextBalloon text={t('tooltip.preparing')} position="top">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className="px-6 py-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-full transition-colors duration-300 text-white/90 border border-blue-400/30"
+                >
+                  {t('result.share')}
+                </motion.button>
+              </TextBalloon>
             </div>
           </motion.div>
         </main>

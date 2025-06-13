@@ -1,0 +1,16 @@
+{
+  "ko": {
+    "tooltip": {
+      "preparing": "사용하실 수 있도록 열심히 준비중입니다",
+      "compatibility": "다음 업데이트에서 사용할 수 있습니다",
+      "share": "다음 업데이트에서 사용할 수 있습니다"
+    }
+  },
+  "en": {
+    "tooltip": {
+      "preparing": "We are preparing hard for this feature.",
+      "compatibility": "Coming in the next update",
+      "share": "Coming in the next update"
+    }
+  }
+}
