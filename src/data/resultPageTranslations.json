@@ -12,8 +12,8 @@
       "genderSpecific": "성별 특화 해석",
       "backToHome": "처음으로 돌아가기",
       "tryAgain": "다시 시작하기",
-      "compatibility": "궁합 보기",
-      "share": "결과 공유하기"
+      "compatibility": "궁합 보기 🚧",
+      "share": "결과 공유하기 🚧"
     }
   },
   "en": {
@@ -29,8 +29,8 @@
       "genderSpecific": "Gender-Specific Interpretation",
       "backToHome": "Back to Home",
       "tryAgain": "Try Again",
-      "compatibility": "View Compatibility",
-      "share": "Share Results"
+      "compatibility": "View Compatibility 🚧",
+      "share": "Share Results 🚧"
     }
   }
 }
