@@ -6,6 +6,7 @@ import StarryBackground from '../components/common/StarryBackground';
 import CustomSelect from '../components/CustomSelect';
 import CitySearch from '../components/CitySearch';
 import { calculateBig3, type BirthData } from '../utils/astrology';
+import { correctDateForAstrology } from '../utils/dateCorrection';
 
 // No longer need to define zodiac signs as we're calculating them
 
@@ -142,10 +143,27 @@ const InputPage = () => {
   // Calculate Big 3 based on birth data
   const calculateBig3Signs = () => {
     try {
+      // Parse birth date from form data
+      const birthYear = parseInt(formData.birthYear);
+      const birthMonth = parseInt(formData.birthMonth);
+      const birthDay = parseInt(formData.birthDay);
+      
+      // Apply date correction for astrological calculations
+      // This corrects the date by adding one day to account for UTC differences
+      const correctedDate = correctDateForAstrology(
+        birthYear,
+        birthMonth,
+        birthDay
+      );
+      
+      console.log(`Original birth date: ${birthYear}-${birthMonth}-${birthDay}`);
+      console.log(`Corrected date for astrology: ${correctedDate.year}-${correctedDate.month}-${correctedDate.day}`);
+      
+      // Create birth data with corrected date
       const birthData: BirthData = {
-        year: parseInt(formData.birthYear),
-        month: parseInt(formData.birthMonth),
-        day: parseInt(formData.birthDay),
+        year: correctedDate.year,
+        month: correctedDate.month,
+        day: correctedDate.day,
         hour: parseInt(formData.birthHour),
         minute: parseInt(formData.birthMinute),
         latitude: selectedCityCoords.current.latitude,
