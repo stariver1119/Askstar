@@ -1,5 +1,8 @@
 # Askstar (별에 묻다) 🌟
 
+## Link
+- [Askstar](https://stariver1119.github.io/Askstar/)
+
 ## Overview | 개요
 Askstar (or "별에 묻다" in Korean, meaning "Ask the Stars") is an interactive astrology service that provides personalized astrological interpretations based on your birth chart. Using the positions of the Sun, Moon, and Ascendant (Rising sign), askstar offers insights into personality traits, emotional tendencies, and how you present yourself to the world.
 
@@ -50,18 +53,20 @@ Askstar (or "별에 묻다" in Korean, meaning "Ask the Stars") is an interactiv
 ## Technical Stack | 기술 스택
 
 ### Frontend | 프론트엔드
-- React.js with TypeScript
-- Tailwind CSS for styling
-- Framer Motion for animations
+- React 19 with TypeScript 5.8
+- Tailwind CSS 3.4 for styling
+- Framer Motion 12 for animations
+- React Router 7 for navigation
+- Vite 6 for build tooling
 
-### Backend | 백엔드
-- Node.js
-- MongoDB for data storage
-- Web scraping utilities
+### Data Processing | 데이터 처리
+- circular-natal-horoscope-js for astrological calculations
+- node-geocoder for location data
+- Google Spreadsheet API for data management
 
 ### Deployment | 배포
-- Vercel/Netlify for frontend
-- MongoDB Atlas for database
+- GitHub Pages for hosting
+- Environment variables with dotenv
 
 ## Getting Started | 시작하기
 
@@ -79,7 +84,13 @@ http://localhost:3000
 ## Current Status | 현재 상태
 - ✅ Landing page design | 랜딩 페이지 디자인
 - ✅ Mobile responsiveness | 모바일 반응형
-- 🚧 Birth chart analysis (In Progress) | 출생 차트 분석 (진행 중)
+- ✅ i18n integration (Korean/English) | 다국어 지원 (한국어/영어)
+- ✅ Input page implementation | 입력페이지 구현
+- ✅ Result page with motion visualization | 결과페이지(모션 시각화) 구현
+- ✅ First deployment | 1차 배포 완료
+- ✅ Birth chart analysis | 출생 차트 분석 기능
+- ✅ MainPage improvements | 메인페이지 개선
+- 🚧 UI/UX improvements (In Progress) | UI/UX 개선 (진행 중, 일부 진행 완료)
 - 📅 Compatibility features (Planned) | 궁합 기능 (계획됨)
 
 ## Contact | 연락처
