@@ -11,6 +11,21 @@
         "other": "기타",
         "placeholder": "성별을 선택해주세요"
       },
+      "birthDate": {
+        "label": "생년월일",
+        "year": "년",
+        "month": "월",
+        "day": "일"
+      },
+      "birthTime": {
+        "label": "출생 시간",
+        "hour": "시",
+        "minute": "분"
+      },
+      "city": {
+        "label": "출생 도시",
+        "placeholder": "도시를 검색하세요"
+      },
       "sun": { "label": "태양궁 별자리", "placeholder": "태양궁을 선택해주세요" },
       "moon": { "label": "달궁 별자리", "placeholder": "달궁을 선택해주세요" },
       "rising": { "label": "상승궁 (어센던트)", "placeholder": "상승궁을 선택해주세요" },
@@ -36,6 +51,21 @@
         "female": "Female", 
         "other": "Other",
         "placeholder": "Select your gender"
+      },
+      "birthDate": {
+        "label": "Birth Date",
+        "year": "Year",
+        "month": "Month",
+        "day": "Day"
+      },
+      "birthTime": {
+        "label": "Birth Time",
+        "hour": "Hour",
+        "minute": "Minute"
+      },
+      "city": {
+        "label": "Birth City",
+        "placeholder": "Search for a city"
       },
       "sun": { "label": "Sun Sign", "placeholder": "Select your sun sign" },
       "moon": { "label": "Moon Sign", "placeholder": "Select your moon sign" },
