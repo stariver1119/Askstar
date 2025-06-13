@@ -1,7 +1,6 @@
 # Askstar (별에 묻다) 🌟
 
-## Link
-- [Askstar](https://stariver1119.github.io/Askstar/)
+## 🔗 [Askstar](https://stariver1119.github.io/Askstar/)
 
 ## Overview | 개요
 Askstar (or "별에 묻다" in Korean, meaning "Ask the Stars") is an interactive astrology service that provides personalized astrological interpretations based on your birth chart. Using the positions of the Sun, Moon, and Ascendant (Rising sign), askstar offers insights into personality traits, emotional tendencies, and how you present yourself to the world.
