@@ -4,7 +4,7 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/Askstar/',
+  base: '/',
   server: {
     host: true, // Expose to all network interfaces
     port: 3000, // Use a specific port

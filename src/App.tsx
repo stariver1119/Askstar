@@ -4,8 +4,8 @@ import InputPage from './pages/InputPage'
 import ResultPage from './pages/ResultPage'
 import { LanguageProvider } from './contexts/LanguageContext'
 
-// Get base path from Vite environment or default to '/Askstar/'
-const BASE_PATH = import.meta.env.BASE_URL || '/Askstar/'
+// Get base path from Vite environment or default to '/'
+const BASE_PATH = import.meta.env.BASE_URL || '/'
 
 function App() {
   return (
