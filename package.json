@@ -1,8 +1,8 @@
 {
   "name": "askstar_new",
-  "homepage": "https://stariver1119.github.io/Askstar",
+  "homepage": "https://askstar.kr",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "convert-data": "node scripts/convertAllLanguages.js",
