@@ -7,6 +7,22 @@
 - 카테고리: Added, Changed, Fixed, Removed
 - 이모지와 상세 설명을 포함합니다
 
+[2025-06-14] - 🌐 도메인 설정 및 파비콘 구현
+
+### Added
+- ✅ 프로젝트 도메인 구매 및 설정
+- ✅ 커스텀 파비콘 디자인 및 추가 (`public/askstar-icon.png`)
+- ✅ 다중 기기 호환성을 위한 파비콘 태그 추가
+
+### Changed
+- 🔄 GitHub Pages와 커스텀 도메인 연결 설정
+- 🔄 DNS 설정 및 CNAME 파일 구성
+- 🔄 기존 SVG 파비콘에서 PNG 파비콘으로 변경
+
+### Technical Improvements
+- 모바일 크롬 호환성을 위한 다양한 파비콘 태그 추가 (apple-touch-icon, Android sizes, msapplication)
+- 웹사이트 브랜딩 및 아이덴티티 강화
+
 [2025-06-13] - 📝 Result Page UI Details & Mobile Menu Toggle
 
 ### Added
