@@ -5,6 +5,7 @@ import mainPageTranslations from '../data/mainPageTranslations.json';
 import inputPageTranslations from '../data/inputPageTranslations.json';
 import resultPageTranslations from '../data/resultPageTranslations.json';
 import tooltipTranslations from '../data/tooltipTranslations.json';
+import loadingPageTranslations from '../data/loadingPageTranslations.json';
 
 // Define translation record types
 type TranslationRecord = Record<string, string | Record<string, string | Record<string, string>>>;
@@ -46,7 +47,8 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
         ...(mainPageTranslations as TranslationsData)[lang],
         ...(inputPageTranslations as TranslationsData)[lang],
         ...(resultPageTranslations as TranslationsData)[lang],
-        ...(tooltipTranslations as TranslationsData)[lang]
+        ...(tooltipTranslations as TranslationsData)[lang],
+        ...(loadingPageTranslations as TranslationsData)[lang]
       };
     });
     

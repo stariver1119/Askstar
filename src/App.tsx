@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 import InputPage from './pages/InputPage'
+import LoadingPage from './pages/LoadingPage'
 import ResultPage from './pages/ResultPage'
 import { LanguageProvider } from './contexts/LanguageContext'
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/input" element={<InputPage />} />
+          <Route path="/loading" element={<LoadingPage />} />
           <Route path="/result" element={<ResultPage />} />
         </Routes>
       </Router>

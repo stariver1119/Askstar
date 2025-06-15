@@ -206,10 +206,10 @@ const InputPage = () => {
         const big3 = calculateBig3Signs();
         
         if (big3) {
-          // Navigate to result page with form data
-          navigate('/result', {
+          // Navigate to loading page with form data
+          navigate('/loading', {
             state: {
-              formData: {
+              userData: {
                 name: formData.name,
                 gender: formData.gender,
                 sunSign: big3.sunSign,

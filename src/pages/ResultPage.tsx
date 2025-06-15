@@ -62,10 +62,10 @@ const ResultPage = () => {
     return currentLanguage === 'ko' ? zodiacMap[sign].ko : zodiacMap[sign].en;
   };
 
-  // Load form data from location state
+  // Load user data from location state
   useEffect(() => {
-    if (location.state && location.state.formData) {
-      setFormData(location.state.formData);
+    if (location.state && location.state.userData) {
+      setFormData(location.state.userData);
     } else {
       // Redirect to input page if no data is available
       navigate('/input');
