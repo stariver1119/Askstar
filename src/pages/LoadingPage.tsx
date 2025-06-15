@@ -15,8 +15,8 @@ const LoadingPage = () => {
   const userData = location.state?.userData;
   
   // Progress bar duration in milliseconds
-  const totalDuration = 6000; // 5 seconds
-  const updateInterval = 50; // Update progress every 50ms
+  const totalDuration = 6000; // 6 seconds
+  const updateInterval = 16; // Update progress every 16ms (60fps)
   
   // Messages to display at different time points
   const messages = [
@@ -67,21 +67,21 @@ const LoadingPage = () => {
   return (
     <StarryBackground>
       <div className="loading-container">
-        <div className="loading-content">
-          <h2>{t('loading.title')}</h2>
+        <div className="loading-title">
+          <h5>{t('loading.title')}</h5>
+        </div>
+        
+        {/* Progress bar container with messages inside */}
+        <div className="progress-container">
+          {/* Progress bar - The width is controlled by the progress state */}
+          <div 
+            className="progress-bar"
+            style={{ width: `${progress}%` }}
+          ></div>
           
-          {/* Progress bar container with messages inside */}
-          <div className="progress-container">
-            {/* Progress bar - The width is controlled by the progress state */}
-            <div 
-              className="progress-bar"
-              style={{ width: `${progress}%` }}
-            ></div>
-            
-            {/* Message inside progress bar */}
-            <div className="message-inside-bar">
-              <p>{messages[currentMessage].text} {messages[currentMessage].emoji}</p>
-            </div>
+          {/* Message inside progress bar */}
+          <div className="message-inside-bar">
+            <p>{messages[currentMessage].text} {messages[currentMessage].emoji}</p>
           </div>
         </div>
       </div>
