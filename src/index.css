@@ -4,10 +4,20 @@
 
 @layer base {
   html {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Nanum Gothic', 'Playfair Display', sans-serif, serif;
   }
   body {
     @apply bg-space-blue text-white min-h-screen;
+  }
+  
+  /* 영어 텍스트에 Playfair Display 적용 */
+  :lang(en) {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  /* 한국어 텍스트에 나눔고딕 적용 */
+  :lang(ko) {
+    font-family: 'Nanum Gothic', sans-serif;
   }
 }
 

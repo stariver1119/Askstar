@@ -15,7 +15,7 @@ const LoadingPage = () => {
   const userData = location.state?.userData;
   
   // Progress bar duration in milliseconds
-  const totalDuration = 6000; // 6 seconds
+  const totalDuration = 8000; // 8 seconds
   const updateInterval = 16; // Update progress every 16ms (60fps)
   
   // Messages to display at different time points
@@ -35,9 +35,9 @@ const LoadingPage = () => {
       setProgress(newProgress);
       
       // Update message based on elapsed time
-      if (elapsedTime < 2000) {
+      if (elapsedTime < 2500) {
         setCurrentMessage(0);
-      } else if (elapsedTime < 4000) {
+      } else if (elapsedTime < 5000) {
         setCurrentMessage(1);
       } else {
         setCurrentMessage(2);
