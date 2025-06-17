@@ -2,7 +2,7 @@
   "ko": {
     "main": {
       "title": "별이 들려주는 당신의 이야기",
-      "description": "🌙 \"나는 사자자리인데 왜 내성적이지?\"\n✨ \"처녀자리인데 완벽주의가 아닌데?\"\n\n그럴 수밖에 없었습니다. 지금까지는 별자리의 일부만 알았거든요.\n 나머지를 채울 새로운 별의 이야기를 들어보세요.",
+      "description": "당신의 별자리 이야기에는 아직 읽지 않은 챕터가 남아있어요.",
       "askButton": "별에게 물어보세요",
       "navHome": "홈",
       "navAbout": "서비스 소개",
@@ -13,7 +13,7 @@
   "en": {
     "main": {
       "title": "Your story from the stars",
-      "description": "🌙 \"I'm a Leo but why am I so introverted?\"\n✨ \"I'm a Virgo but not a perfectionist?\"\n\nThat's because you've only known part of your zodiac story.\nListen to the new story of stars that will complete the rest.",
+      "description": "Your zodiac story has many chapters left to read.",
       "askButton": "Ask the Stars",
       "navHome": "Home",
       "navAbout": "About Service",
