@@ -41,10 +41,13 @@ const InterpretationCard: React.FC<InterpretationCardProps> = ({
         {title}
       </h3>
       <div className="flex-1 overflow-y-auto">
-        <ul className={`text-white/80 ${isGenderSpecific ? 'italic' : ''} space-y-2 list-disc pl-5`}>
+        <ul className={`text-white/80 ${isGenderSpecific ? 'italic' : ''} space-y-2 list-none pl-5`}>
           {sentences.map((sentence, index) => (
-            <li key={index} className="leading-relaxed">
-              {sentence.trim()}
+            <li key={index} className="leading-relaxed flex items-start">
+              <svg className="w-2.5 h-2.5 mt-1.5 mr-2 text-white/30 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+              </svg>
+              <span>{sentence.trim()}</span>
             </li>
           ))}
         </ul>
