@@ -131,6 +131,14 @@ const Home = () => {
             >
               {t('main.title')}
             </motion.h1>
+            <motion.p
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="text-lg font-light mb-10 text-center tracking-wider leading-relaxed text-white/90"
+            >
+              {t('main.description')}
+            </motion.p>
 
             <motion.button
               initial={{ scale: 0.9, opacity: 0 }}
