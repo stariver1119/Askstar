@@ -2,7 +2,7 @@
   "name": "askstar_new",
   "homepage": "https://askstar.kr",
   "private": true,
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "scripts": {
     "convert-data": "node scripts/convertAllLanguages.js",
