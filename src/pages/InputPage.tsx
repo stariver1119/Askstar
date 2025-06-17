@@ -284,6 +284,9 @@ const InputPage = () => {
                   <p className="text-white/70 text-center">
                     {t('input.subtitle')}
                   </p>
+                  <p className="text-white/50 text-center text-xs mt-1">
+                    {t('input.privacyNotice')}
+                  </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="flex flex-col max-w-xl mx-auto space-y-4 w-full">

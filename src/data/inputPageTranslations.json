@@ -3,6 +3,7 @@
     "input": {
       "title": "별에게 당신을 소개해주세요",
       "subtitle": "별자리 분석을 위한 정보 입력하기",
+      "privacyNotice": "개인 정보는 브라우저에서만 처리되며 어떤 서버에도 저장되지 않습니다.",
       "name": { "label": "이름", "placeholder": "이름을 입력해주세요" },
       "gender": { 
         "label": "성별", 
@@ -44,6 +45,7 @@
     "input": {
       "title": "Tell star about you",
       "subtitle": "Enter Your Details",
+      "privacyNotice": "Your personal information is processed only in your browser and is not stored on any servers.",
       "name": { "label": "Name", "placeholder": "Enter your name" },
       "gender": { 
         "label": "Gender", 
