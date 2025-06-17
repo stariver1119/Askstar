@@ -8,6 +8,30 @@
 - 이모지와 상세 설명을 포함합니다
 
 
+[2025-06-18] - 🔍 SEO 최적화 및 검색 엔진 인덱싱 개선
+
+### Added
+- ✅ 사이트맵(sitemap.xml) 생성 및 통합
+- ✅ robots.txt 파일 추가로 검색 엔진 크롤링 최적화
+- ✅ Google AdSense를 위한 ads.txt 파일 추가
+- ✅ 메타 태그 최적화: 설명, 키워드, 로봇, 정식 URL 추가
+- ✅ Open Graph 태그 추가로 소셜 미디어 공유 최적화
+- ✅ JSON-LD 구조화 데이터 추가로 검색 결과 강화
+
+### Changed
+- 🔄 HTML lang 속성을 'ko'로 변경하여 한국어 사이트임을 명시
+- 🔄 폰트 스택 최적화: 한국어는 Nanum Gothic, 영어는 Playfair Display 사용
+- 🔄 메인 로고 폰트를 Playfair Display(serif)로 유지하도록 CSS 규칙 추가
+- 🔄 메타 설명 및 타이틀 텍스트 개선 ('별에 묻다' 브랜딩 강화)
+
+### Technical Improvements
+- lang 속성 기반 언어별 폰트 적용을 위한 CSS :lang() 선택자 활용
+- 구조화된 데이터로 검색 결과 풍부한 스니펫 지원
+- 검색 엔진 및 소셜 미디어 최적화를 위한 메타데이터 구조화
+
+---
+
+
 [2025-06-17] - 🔒 보안 점검 및 UI 미세 조정
 
 ### 보안 점검 (Security Audit)
@@ -51,6 +75,28 @@
 - Implemented dynamic document.title updates in React components
 - Developed useDocumentTitle custom hook for automatic title updates on language change
 - Optimized main page description text styling
+
+---
+
+[2025-06-15] - ✨ 로딩 페이지 구현
+
+### Added
+- ✅ InputPage와 ResultPage 사이에 로딩 페이지 추가
+- ✅ 단계별 메시지가 표시되는 진행 표시줄 구현 (3단계)
+- ✅ 로딩 메시지 다국어 지원 (i18n)
+- ✅ 별이 빛나는 배경에 맞는 로딩 페이지 디자인
+
+### Changed
+- 🔄 로딩 시간을 초기 5초에서 최종 8초로 조정
+- 🔄 로딩 바 디자인: 금색/노란색 바탕에 그라디언트 선행 가장자리 적용
+- 🔄 로딩 메시지 위치를 로딩 바 내부로 이동
+- 🔄 레이아웃을 수직 구조로 변경 (제목 위, 로딩 바 아래)
+
+### Technical Improvements
+- 로딩 바 애니메이션 최적화 (60fps, 16ms 업데이트 주기)
+- 로딩 바 분절 현상 해결을 위한 선행 가장자리 기법 적용
+- CSS 그라디언트와 SVG 반짝임 효과의 레이어링 최적화
+- 반응형 디자인으로 모바일/데스크톱 환경 모두 지원
 
 ---
 
