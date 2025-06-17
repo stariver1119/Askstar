@@ -7,6 +7,53 @@
 - 카테고리: Added, Changed, Fixed, Removed
 - 이모지와 상세 설명을 포함합니다
 
+
+[2025-06-17] - 🔒 보안 점검 및 UI 미세 조정
+
+### 보안 점검 (Security Audit)
+- ✅ axios 및 google-spreadsheet 패키지 보안 취약점 점검
+- ✅ 기본 Content Security Policy (CSP) 메타 태그 추가
+- ✅ InputPage 입력 유효성 검사 및 과도한 입력 방지 확인
+- ✅ 개인정보 처리 방식 감사 (세션 내 메모리에만 저장, 서버 저장 없음)
+- ✅ InputPage에 개인정보 처리 관련 안내문 추가 (한/영)
+
+### UI 미세 조정 (UI Refinements)
+- ✅ 메인 페이지 설명 텍스트 줄바꿈 렌더링 문제 해결 (whitespace-pre-line 적용)
+- ✅ 메인 페이지 "시작하기" 버튼 InputPage로 연결
+- ✅ 메인 페이지 설명 텍스트 투명도 조정 (60%)
+- ✅ 메인 페이지 제목과 설명 간격 축소
+- ✅ HTML 타이틀 태그에 i18n 적용 (동적 언어 변경 지원)
+
+### 기술적 개선 (Technical Improvements)
+- React 컴포넌트에서 document.title 동적 업데이트 구현
+- useDocumentTitle 커스텀 훅 개발로 언어 변경 시 타이틀 자동 업데이트
+- 메인 페이지 설명 텍스트 스타일링 최적화
+
+---
+
+[2025-06-17] - 🔒 Security Audit & UI Fine-tuning
+
+### Security Audit
+- ✅ Audited axios and google-spreadsheet packages for security vulnerabilities
+- ✅ Added basic Content Security Policy (CSP) meta tag
+- ✅ Verified input validation on InputPage to prevent excessive input
+- ✅ Audited personal data handling (stored only in session memory, no server storage)
+- ✅ Added privacy notice to InputPage in both Korean and English
+
+### UI Refinements
+- ✅ Fixed main page description line break rendering issue (applied whitespace-pre-line)
+- ✅ Connected main page "Get Started" button to InputPage
+- ✅ Adjusted main page description text opacity (60%)
+- ✅ Reduced spacing between main page title and description
+- ✅ Implemented i18n for HTML title tag (supports dynamic language switching)
+
+### Technical Improvements
+- Implemented dynamic document.title updates in React components
+- Developed useDocumentTitle custom hook for automatic title updates on language change
+- Optimized main page description text styling
+
+---
+
 [2025-06-14] - 🌐 도메인 설정 및 파비콘 구현
 
 ### Added
