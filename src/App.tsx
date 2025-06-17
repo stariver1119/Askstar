@@ -4,6 +4,7 @@ import InputPage from './pages/InputPage'
 import LoadingPage from './pages/LoadingPage'
 import ResultPage from './pages/ResultPage'
 import { LanguageProvider } from './contexts/LanguageContext'
+import { useDocumentTitle } from './hooks/useDocumentTitle'
 
 // Get base path from Vite environment or default to '/'
 const BASE_PATH = import.meta.env.BASE_URL || '/'
@@ -11,6 +12,7 @@ const BASE_PATH = import.meta.env.BASE_URL || '/'
 function App() {
   return (
     <LanguageProvider>
+      <TitleUpdater />
       <Router basename={BASE_PATH}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -21,6 +23,12 @@ function App() {
       </Router>
     </LanguageProvider>
   )
+}
+
+// Component to handle document title updates
+function TitleUpdater() {
+  useDocumentTitle('pageTitle');
+  return null;
 }
 
 export default App

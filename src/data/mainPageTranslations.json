@@ -1,5 +1,6 @@
 {
   "ko": {
+    "pageTitle": "Askstar - 별에 묻다, 당신의 새로운 별자리 해석 사이트",
     "main": {
       "title": "별이 들려주는 당신의 이야기",
       "description": "당신의 별자리 이야기에는 아직 읽지 않은 챕터가 남아있어요.",
@@ -11,6 +12,7 @@
     }
   },
   "en": {
+    "pageTitle": "Askstar - Your New Astrology Interpretation Guide",
     "main": {
       "title": "Your story from the stars",
       "description": "Your zodiac story has many chapters left to read.",
