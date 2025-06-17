@@ -135,7 +135,7 @@ const Home = () => {
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="text-lg font-light mb-10 text-center tracking-wider leading-relaxed text-white/90"
+              className="text-lg font-light mb-10 text-center tracking-wider leading-relaxed text-white/90 whitespace-pre-line"
             >
               {t('main.description')}
             </motion.p>
