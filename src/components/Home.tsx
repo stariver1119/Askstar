@@ -54,7 +54,7 @@ const Home = () => {
           <div className="hidden md:flex gap-6">
             <a href="#" className="nav-link">{t('main.navHome')}</a>
             <a href="#" className="nav-link">{t('main.navAbout')}</a>
-            <a href="#" className="nav-link">{t('main.navGetStarted')}</a>
+            <a onClick={() => navigate('/input')} className="nav-link cursor-pointer">{t('main.navGetStarted')}</a>
           </div>
           
           {/* Mobile Menu Toggle Button */}
@@ -114,7 +114,7 @@ const Home = () => {
               >
                 <a href="#" className="nav-link text-lg py-2">{t('main.navHome')}</a>
                 <a href="#" className="nav-link text-lg py-2">{t('main.navAbout')}</a>
-                <a href="#" className="nav-link text-lg py-2">{t('main.navGetStarted')}</a>
+                <a onClick={() => navigate('/input')} className="nav-link text-lg py-2 cursor-pointer">{t('main.navGetStarted')}</a>
               </motion.div>
             )}
           </motion.div>
