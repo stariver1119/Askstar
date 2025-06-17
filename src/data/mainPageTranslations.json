@@ -2,6 +2,7 @@
   "ko": {
     "main": {
       "title": "별이 들려주는 당신의 이야기",
+      "description": "기존에 알던 나의 태양 별자리에 해석에 달, 상승 별자리 해석을 더해 더 복합적인 해석을 제공합니다.", 
       "askButton": "별에게 물어보세요",
       "navHome": "홈",
       "navAbout": "서비스 소개",
@@ -12,6 +13,7 @@
   "en": {
     "main": {
       "title": "Your story from the stars",
+      "description": "The stars are telling your story with the addition of the interpretation of your sun sign, moon sign, and rising sign.",
       "askButton": "Ask the Stars",
       "navHome": "Home",
       "navAbout": "About Service",
