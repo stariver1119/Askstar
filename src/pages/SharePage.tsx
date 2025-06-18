@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from '../hooks/useTranslation';
 import shareTranslations from '../data/sharePageTranslations.json';
@@ -14,7 +14,6 @@ type ZodiacType = 'sun' | 'moon' | 'rising';
 
 const SharePage = () => {
   const { resultId } = useParams<{ resultId: string }>();
-  const navigate = useNavigate();
   const { currentLanguage } = useTranslation();
   const [sharedResult, setSharedResult] = useState<ShareableResult | null>(null);
   const [loading, setLoading] = useState(true);
