@@ -15,7 +15,7 @@ type ZodiacType = 'sun' | 'moon' | 'rising';
 const SharePage = () => {
   const { resultId } = useParams<{ resultId: string }>();
   const navigate = useNavigate();
-  const { t, currentLanguage } = useTranslation();
+  const { currentLanguage } = useTranslation();
   const [sharedResult, setSharedResult] = useState<ShareableResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -87,10 +87,7 @@ const SharePage = () => {
     return getShareTranslation(titleKeys[type]);
   };
 
-  // 테스트 시작 핸들러
-  const handleStartTest = () => {
-    navigate('/input');
-  };
+  // 테스트 시작 핸들러는 더 이상 필요하지 않음
 
   // 로딩 중
   if (loading) {
