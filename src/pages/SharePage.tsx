@@ -106,7 +106,7 @@ const SharePage = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-purple-900 p-6 text-center">
         <h1 className="text-2xl text-white mb-6">{getShareTranslation('expired')}</h1>
-        <Link to="/input" className="px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors">
+        <Link to="/input" className="px-8 py-3 bg-star-gold/20 hover:bg-star-gold/30 text-white/90 rounded-full border border-star-gold/30 hover:border-star-gold/50 hover:scale-105 transition-all duration-300 transform inline-block">
           {getShareTranslation('startTest')}
         </Link>
       </div>
@@ -169,27 +169,16 @@ const SharePage = () => {
           </div>
 
           <motion.div
-            className="mt-10 mb-6 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-          >
-            <Link to="/input" className="px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors inline-block">
-              {getShareTranslation('startTest')}
-            </Link>
-          </motion.div>
-          
-          <motion.div
-            className="mt-12 mb-10 p-6 bg-purple-800/50 rounded-xl"
+            className="mt-10 mb-10 p-6 bg-purple-800/50 rounded-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1.1 }}
+            transition={{ duration: 0.5, delay: 0.9 }}
           >
             <h3 className="text-xl text-white mb-3">{getShareTranslation('curious')}</h3>
             <p className="text-white/80 mb-4">
               {getShareTranslation('curiousDesc')}
             </p>
-            <Link to="/input" className="px-5 py-2 bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition-colors inline-block">
+            <Link to="/input" className="px-8 py-3 bg-star-gold/20 hover:bg-star-gold/30 text-white/90 rounded-full border border-star-gold/30 hover:border-star-gold/50 hover:scale-105 transition-all duration-300 transform inline-block">
               {getShareTranslation('discover')}
             </Link>
           </motion.div>
