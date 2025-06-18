@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
+import { createShareableResult, saveShareableResult, createShareUrl } from '../utils/shareUtils';
 import TextBalloon from '../components/common/TextBalloon';
 import StarryBackground from '../components/common/StarryBackground';
 import ZodiacIcon from '../components/ZodiacIcon';
 import type { ZodiacSign } from '../components/ZodiacIcon';
 import InterpretationCard from '../components/InterpretationCard';
+import ShareModal from '../components/ShareModal';
 
 // Import interpretation data
 import interpretationsEn from '../data/interpretations_en.json';
@@ -20,11 +22,15 @@ interface FormData {
   risingSign: ZodiacSign;
 }
 
-const ResultPage = () => {
-  const { t, currentLanguage } = useTranslation();
+const ResultPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t, currentLanguage } = useTranslation();
+  
   const [formData, setFormData] = useState<FormData | null>(null);
+  const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
+  const [shareUrl, setShareUrl] = useState<string>('');
+
   // Define a proper type for interpretations instead of using 'any'
   interface Interpretations {
     basic_interpretations: {
@@ -84,6 +90,36 @@ const ResultPage = () => {
 
   const handleTryAgain = () => {
     navigate('/input');
+  };
+  
+  // 결과 공유 핸들러
+  const handleShare = () => {
+    if (!formData || !interpretations) return;
+    
+    // 해석 데이터 추출
+    const interpretationData = {
+      sun: interpretations.basic_interpretations.sun[getZodiacName(formData.sunSign)],
+      moon: interpretations.basic_interpretations.moon[getZodiacName(formData.moonSign)],
+      rising: interpretations.basic_interpretations.ascendant[getZodiacName(formData.risingSign)]
+    };
+    
+    // 공유 가능한 결과 생성
+    const shareableResult = createShareableResult(formData, interpretationData);
+    
+    // 결과 저장
+    saveShareableResult(shareableResult);
+    
+    // 공유 URL 생성
+    const url = createShareUrl(shareableResult.id);
+    setShareUrl(url);
+    
+    // 공유 모달 표시
+    setIsShareModalOpen(true);
+  };
+  
+  // 공유 모달 닫기
+  const handleCloseShareModal = () => {
+    setIsShareModalOpen(false);
   };
 
   // If data or interpretations are not loaded yet, show loading
@@ -326,14 +362,13 @@ const ResultPage = () => {
                 </motion.button>
               </TextBalloon>
               
-              <TextBalloon text={t('tooltip.preparing')} position="top">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  className="px-6 py-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-full transition-colors duration-300 text-white/90 border border-blue-400/30"
-                >
-                  {t('result.share')}
-                </motion.button>
-              </TextBalloon>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className="px-6 py-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-full transition-colors duration-300 text-white/90 border border-blue-400/30"
+                onClick={handleShare}
+              >
+                {t('result.share')}
+              </motion.button>
             </div>
           </motion.div>
         </main>
@@ -342,9 +377,17 @@ const ResultPage = () => {
         <footer className="text-center py-4 text-white/25 font-extralight text-xs tracking-widest w-full">
           <p>© 2025 askstar. All rights reserved.</p>
         </footer>
+        {/* ShareModal */}
+        <ShareModal 
+          isOpen={isShareModalOpen} 
+          onClose={handleCloseShareModal} 
+          shareUrl={shareUrl} 
+        />
       </div>
     </StarryBackground>
   );
 };
+
+
 
 export default ResultPage;

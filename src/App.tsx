@@ -3,6 +3,7 @@ import Home from './components/Home'
 import InputPage from './pages/InputPage'
 import LoadingPage from './pages/LoadingPage'
 import ResultPage from './pages/ResultPage'
+import SharePage from './pages/SharePage'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { useDocumentTitle } from './hooks/useDocumentTitle'
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/input" element={<InputPage />} />
           <Route path="/loading" element={<LoadingPage />} />
           <Route path="/result" element={<ResultPage />} />
+          <Route path="/share/:resultId" element={<SharePage />} />
         </Routes>
       </Router>
     </LanguageProvider>

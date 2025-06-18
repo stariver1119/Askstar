@@ -20,6 +20,7 @@
     "circular-natal-horoscope-js": "^1.1.0",
     "dotenv": "^16.5.0",
     "google-spreadsheet": "^3.3.0",
+    "nanoid": "^5.1.5",
     "node-geocoder": "^4.4.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

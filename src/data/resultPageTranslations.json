@@ -13,7 +13,24 @@
       "backToHome": "처음으로 돌아가기",
       "tryAgain": "다시 시작하기",
       "compatibility": "궁합 보기 🚧",
-      "share": "결과 공유하기 🚧"
+      "share": "결과 공유하기"
+    },
+    "shareModal": {
+      "title": "공유하기",
+      "copyLink": "링크 복사",
+      "kakao": "카카오톡",
+      "instagram": "인스타그램",
+      "tiktok": "틱톡",
+      "copied": "공유 링크가 클립보드에 복사되었습니다!",
+      "copyFailed": "복사에 실패했습니다. 아래 링크를 수동으로 복사하세요:",
+      "kakaoNotAvailable": "카카오톡 공유가 지원되지 않습니다. 링크를 복사해 공유해보세요.",
+      "kakaoError": "카카오톡 공유에 실패했습니다. 링크를 복사해 공유해보세요.",
+      "instagramGuide": "인스타그램에서는 직접 링크 공유가 어렵습니다. 링크가 복사되었으니 인스타그램 프로필 링크나 DM에 붙여넣기 해보세요.",
+      "tiktokGuide": "틱톡에서는 직접 링크 공유가 어렵습니다. 링크가 복사되었으니 틱톡 프로필이나 댓글에 붙여넣기 해보세요.",
+      "kakaoTitle": "나의 별자리 해석 결과",
+      "kakaoDescription": "내 별자리 해석 결과를 확인해보세요!",
+      "viewResult": "결과 보기",
+      "tryTest": "테스트 해보기"
     }
   },
   "en": {
@@ -29,8 +46,32 @@
       "genderSpecific": "Gender-Specific Interpretation",
       "backToHome": "Back to Home",
       "tryAgain": "Try Again",
+      "compatibility": "Check Compatibility 🚧",
+      "share": "Share Results"
+    },
+    "shareModal": {
+      "title": "Share Via",
+      "copyLink": "Copy Link",
+      "kakao": "KakaoTalk",
+      "instagram": "Instagram",
+      "tiktok": "TikTok",
+      "copied": "Share link copied to clipboard!",
+      "copyFailed": "Copy failed. Please manually copy the link below:",
+      "kakaoNotAvailable": "KakaoTalk sharing is not available. The link has been copied for you to share.",
+      "kakaoError": "Failed to share via KakaoTalk. The link has been copied for you to share.",
+      "instagramGuide": "Direct link sharing is limited on Instagram. The link has been copied - paste it in your Instagram profile or DM.",
+      "tiktokGuide": "Direct link sharing is limited on TikTok. The link has been copied - paste it in your TikTok profile or comments.",
+      "kakaoTitle": "My Astrological Interpretation",
+      "kakaoDescription": "Check out my astrological interpretation results!",
+      "viewResult": "View Result",
+      "tryTest": "Take the Test",
+      "moonTitle": "[Moon Sign] Your Emotions and Inner World",
+      "risingTitle": "[Rising Sign] Your External Expression and First Impression",
+      "genderSpecific": "Gender-Specific Interpretation",
+      "backToHome": "Back to Home",
+      "tryAgain": "Try Again",
       "compatibility": "View Compatibility 🚧",
-      "share": "Share Results 🚧"
+      "share": "Share Results"
     }
   }
 }

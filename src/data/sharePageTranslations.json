@@ -1,0 +1,36 @@
+{
+  "en": {
+    "title": "{name}'s Zodiac Interpretation",
+    "subtitle": "Check out your friend's zodiac interpretation",
+    "startTest": "Discover My Zodiac Signs",
+    "expired": "The shared result has expired or cannot be found",
+    "error": "An error occurred",
+    "copied": "Share link copied to clipboard!",
+    "curious": "What are your zodiac signs?",
+    "curiousDesc": "Discover your own zodiac interpretation and compare with your friends. Uncover the hidden traits revealed by your Sun, Moon, and Rising signs.",
+    "discover": "Find My Zodiac Signs",
+    "sunTitle": "Sun Sign",
+    "moonTitle": "Moon Sign",
+    "risingTitle": "Rising Sign",
+    "sunDesc": "Represents your core identity and ego",
+    "moonDesc": "Reflects your emotional inner world",
+    "risingDesc": "Shows how others perceive you"
+  },
+  "ko": {
+    "title": "{name}님의 별자리 해석 결과",
+    "subtitle": "친구의 별자리 해석 결과를 확인해보세요",
+    "startTest": "나의 별자리 알아보기",
+    "expired": "공유된 결과를 찾을 수 없거나 만료되었습니다",
+    "error": "오류가 발생했습니다",
+    "copied": "공유 링크가 클립보드에 복사되었습니다!",
+    "curious": "당신의 별자리는 무엇일까요?",
+    "curiousDesc": "나만의 별자리 해석 결과를 확인하고 친구와 비교해보세요. 당신의 태양, 달, 상승 별자리가 알려주는 숨겨진 특성을 발견하세요.",
+    "discover": "나의 별자리 발견하기",
+    "sunTitle": "태양 별자리",
+    "moonTitle": "달 별자리",
+    "risingTitle": "상승 별자리",
+    "sunDesc": "당신의 핵심 정체성과 자아를 나타냅니다",
+    "moonDesc": "당신의 감정적인 내면 세계를 반영합니다",
+    "risingDesc": "다른 사람들이 당신을 어떻게 인식하는지 보여줍니다"
+  }
+}
