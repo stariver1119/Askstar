@@ -4,6 +4,7 @@ import InputPage from './pages/InputPage'
 import LoadingPage from './pages/LoadingPage'
 import ResultPage from './pages/ResultPage'
 import SharePage from './pages/SharePage'
+import AboutPage from './pages/AboutPage'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { useDocumentTitle } from './hooks/useDocumentTitle'
 
@@ -17,6 +18,7 @@ function App() {
       <Router basename={BASE_PATH}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/input" element={<InputPage />} />
           <Route path="/loading" element={<LoadingPage />} />
           <Route path="/result" element={<ResultPage />} />
