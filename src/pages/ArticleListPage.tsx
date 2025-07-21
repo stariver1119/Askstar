@@ -199,7 +199,7 @@ const ArticleListPage: React.FC = () => {
 
         {/* Footer */}
         <footer className="mt-auto py-6 text-center text-white/60 text-sm">
-          2024 Askstar. 별들이 들려주는 이야기.
+          © 2025 askstar. All rights reserved.
         </footer>
       </div>
     </StarryBackground>
