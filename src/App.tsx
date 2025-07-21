@@ -5,6 +5,9 @@ import LoadingPage from './pages/LoadingPage'
 import ResultPage from './pages/ResultPage'
 import SharePage from './pages/SharePage'
 import AboutPage from './pages/AboutPage'
+import ArticleListPage from './pages/ArticleListPage'
+import ArticlePage from './pages/ArticlePage'
+import AdminSyncPage from './pages/AdminSyncPage'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { useDocumentTitle } from './hooks/useDocumentTitle'
 
@@ -23,6 +26,9 @@ function App() {
           <Route path="/loading" element={<LoadingPage />} />
           <Route path="/result" element={<ResultPage />} />
           <Route path="/share/:resultId" element={<SharePage />} />
+          <Route path="/article" element={<ArticleListPage />} />
+          <Route path="/article/secretuptodate" element={<AdminSyncPage />} />
+          <Route path="/article/:url" element={<ArticlePage />} />
         </Routes>
       </Router>
     </LanguageProvider>

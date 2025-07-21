@@ -1,0 +1,20 @@
+{
+  "articles": [
+    {
+      "id": "237de4ac-0fc5-80b6-a66b-fda631da7847",
+      "title": "상승궁(어센던트)가 성격에 미치는 영향력",
+      "url": "ascendent_influence",
+      "createdTime": "2025-07-21T16:11:00.000Z",
+      "lastEditedTime": "2025-07-21T18:58:00.000Z"
+    },
+    {
+      "id": "237de4ac-0fc5-80ae-8049-dcf5941d2dc0",
+      "title": "12별자리의 기본 성격과 특징 완벽 가이드",
+      "url": "12sign_basic_feature",
+      "createdTime": "2025-07-21T15:45:00.000Z",
+      "lastEditedTime": "2025-07-21T18:58:00.000Z"
+    }
+  ],
+  "buildTime": "2025-07-21T19:54:32.488Z",
+  "totalCount": 2
+}
