@@ -3,10 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import { loadExistingArticles, normalizeNotionArticle, findNewArticles, updateArticlesJson } from './utils/articleComparator.js';
+import { normalizeNotionArticle, updateArticlesJson } from './utils/articleComparator.js';
 import { generateArticleHTML, convertBlocksToContent } from './utils/htmlGenerator.js';
 
-console.log('🚀 스크립트 시작...');
+console.log('🔄 전체 아티클 재빌드 시작...');
 
 // ES 모듈에서 __dirname 대체
 const __filename = fileURLToPath(import.meta.url);
@@ -40,9 +40,30 @@ function ensureDirectoryExists(dir) {
   }
 }
 
-// 메인 빌드 함수 (새로운 아티클만 빌드)
-async function buildArticles() {
-  console.log('🚀 새 아티클 빌드 시작...');
+// 기존 아티클 파일들을 모두 삭제
+function clearExistingArticles() {
+  if (fs.existsSync(ARTICLES_DIR)) {
+    const files = fs.readdirSync(ARTICLES_DIR).filter(file => file.endsWith('.html'));
+    console.log(`🗑️  기존 HTML 파일 ${files.length}개 삭제 중...`);
+    
+    files.forEach(file => {
+      const filePath = path.join(ARTICLES_DIR, file);
+      fs.unlinkSync(filePath);
+      console.log(`   - ${file} 삭제됨`);
+    });
+  }
+  
+  // articles.json도 삭제
+  const jsonPath = path.join(DATA_DIR, 'articles.json');
+  if (fs.existsSync(jsonPath)) {
+    fs.unlinkSync(jsonPath);
+    console.log('📊 기존 articles.json 삭제됨');
+  }
+}
+
+// 메인 재빌드 함수
+async function rebuildAll() {
+  console.log('🔄 전체 재빌드 시작...');
   console.log('📁 출력 디렉토리:', ARTICLES_DIR);
   console.log('📊 데이터 디렉토리:', DATA_DIR);
   console.log('🔑 노션 API 키 존재:', !!process.env.NOTION_API_KEY);
@@ -55,10 +76,8 @@ async function buildArticles() {
     ensureDirectoryExists(DATA_DIR);
     console.log('✅ 디렉토리 생성 완료');
 
-    // 기존 아티클 데이터 로드
-    console.log('📖 기존 아티클 데이터 로드 중...');
-    const existingData = loadExistingArticles(DATA_DIR);
-    console.log(`📊 기존 아티클 수: ${existingData.articles.length}개`);
+    // 기존 파일들 삭제
+    clearExistingArticles();
 
     // 노션에서 아티클 목록 가져오기
     console.log('📚 노션에서 아티클 목록 조회 중...');
@@ -76,24 +95,22 @@ async function buildArticles() {
 
     // 노션 아티클을 표준 형식으로 변환
     const notionArticles = response.results.map(normalizeNotionArticle);
-
-    // 새로운 아티클만 찾기
-    const newArticles = findNewArticles(notionArticles, existingData.articles);
     
-    if (newArticles.length === 0) {
-      console.log('🎉 새로운 아티클이 없습니다. 빌드를 건너뜁니다.');
-      return;
-    }
-
-    console.log(`🆕 새로운 아티클 ${newArticles.length}개를 발견했습니다:`);
-    newArticles.forEach(article => {
-      console.log(`   - ${article.title} (${article.url})`);
+    // URL이 없는 아티클 필터링
+    const validArticles = notionArticles.filter(article => {
+      if (!article.url) {
+        console.warn(`⚠️  아티클 "${article.title}"에 URL이 없습니다. 건너뜁니다.`);
+        return false;
+      }
+      return true;
     });
+
+    console.log(`📝 처리할 아티클 수: ${validArticles.length}개`);
 
     const processedArticles = [];
 
-    // 새로운 아티클만 처리
-    for (const article of newArticles) {
+    // 모든 아티클 처리
+    for (const article of validArticles) {
       console.log(`📝 처리 중: ${article.title} (${article.url})`);
 
       // 아티클 내용 가져오기
@@ -113,21 +130,29 @@ async function buildArticles() {
       console.log(`✅ 생성 완료: ${filePath}`);
     }
 
-    // articles.json 업데이트
+    // articles.json 새로 생성
     updateArticlesJson(DATA_DIR, processedArticles);
 
-    console.log(`🎉 새 아티클 빌드 완료! ${processedArticles.length}개 아티클이 추가되었습니다.`);
+    console.log(`🎉 전체 재빌드 완료! ${processedArticles.length}개 아티클이 생성되었습니다.`);
 
   } catch (error) {
-    console.error('❌ 빌드 중 오류 발생:', error);
+    console.error('❌ 재빌드 중 오류 발생:', error);
     console.error(error.stack);
     process.exit(1);
   }
 }
 
-// 스크립트 실행
-console.log('🏃 buildArticles 함수 실행 시작...');
-buildArticles().catch(error => {
-  console.error('❌ 빌드 오류:', error);
-  process.exit(1);
+// 사용자 확인
+console.log('⚠️  경고: 이 작업은 모든 기존 아티클 파일을 삭제하고 다시 생성합니다.');
+console.log('💡 수동으로 편집된 파일들이 모두 사라집니다.');
+console.log('🚀 계속하려면 Enter를 누르세요. 취소하려면 Ctrl+C를 누르세요.');
+
+process.stdin.once('data', () => {
+  console.log('🏃 rebuildAll 함수 실행 시작...');
+  rebuildAll().catch(error => {
+    console.error('❌ 재빌드 오류:', error);
+    process.exit(1);
+  });
 });
+
+process.stdin.resume();
