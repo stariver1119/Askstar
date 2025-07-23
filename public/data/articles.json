@@ -4,108 +4,123 @@
       "id": "239de4ac-0fc5-8025-98c5-f166fab916e0",
       "title": "별자리 앱과 AI로 분석하는 현대 점성술",
       "url": "sign_ai_pre",
+      "status": "sub",
       "createdTime": "2025-07-23T03:08:00.000Z",
-      "lastEditedTime": "2025-07-23T03:08:00.000Z"
+      "lastEditedTime": "2025-07-23T05:25:00.000Z"
     },
     {
       "id": "239de4ac-0fc5-80d6-a08a-c930c9b2dd2f",
       "title": "별자리는 과학이다",
       "url": "sign_sience",
+      "status": "sub",
       "createdTime": "2025-07-23T03:07:00.000Z",
-      "lastEditedTime": "2025-07-23T03:07:00.000Z"
+      "lastEditedTime": "2025-07-23T04:57:00.000Z"
     },
     {
       "id": "239de4ac-0fc5-801f-8858-cfe31ee638a1",
       "title": "SNS 별자리 밈",
       "url": "sign_sns",
+      "status": "sub",
       "createdTime": "2025-07-23T02:59:00.000Z",
-      "lastEditedTime": "2025-07-23T03:07:00.000Z"
+      "lastEditedTime": "2025-07-23T04:57:00.000Z"
     },
     {
       "id": "239de4ac-0fc5-80c8-97a1-d12190531887",
       "title": "고대 그리스 신화 속 별자리 이야기들",
       "url": "sign_ancientgreece",
+      "status": "sub",
       "createdTime": "2025-07-23T02:58:00.000Z",
-      "lastEditedTime": "2025-07-23T02:59:00.000Z"
+      "lastEditedTime": "2025-07-23T04:57:00.000Z"
     },
     {
       "id": "239de4ac-0fc5-8053-8155-e676c65b9cbb",
       "title": "각 나라별 별자리 해석의 문화적 차이점",
       "url": "sign_nation",
+      "status": "sub",
       "createdTime": "2025-07-23T02:57:00.000Z",
-      "lastEditedTime": "2025-07-23T02:58:00.000Z"
+      "lastEditedTime": "2025-07-23T04:57:00.000Z"
     },
     {
       "id": "239de4ac-0fc5-8041-88f9-f85ca2937b52",
       "title": "동양 12간지와 서양 12별자리의 흥미로운 비교",
       "url": "sign_east_west",
+      "status": "sub",
       "createdTime": "2025-07-23T02:56:00.000Z",
-      "lastEditedTime": "2025-07-23T02:57:00.000Z"
+      "lastEditedTime": "2025-07-23T04:57:00.000Z"
     },
     {
       "id": "239de4ac-0fc5-8051-a2ee-ece70cbe5a2b",
       "title": "생년월일 시간까지 고려한 정밀 운세 해석법",
       "url": "sign_year_day_hh_mm",
+      "status": "sub",
       "createdTime": "2025-07-23T02:55:00.000Z",
-      "lastEditedTime": "2025-07-23T02:56:00.000Z"
+      "lastEditedTime": "2025-07-23T04:57:00.000Z"
     },
     {
       "id": "239de4ac-0fc5-80d8-b2c3-dc2eaa1a0d8c",
       "title": "별자리와 mbti의 연관성",
       "url": "sign_mbti",
+      "status": "main",
       "createdTime": "2025-07-23T02:54:00.000Z",
-      "lastEditedTime": "2025-07-23T02:55:00.000Z"
+      "lastEditedTime": "2025-07-23T04:56:00.000Z"
     },
     {
       "id": "239de4ac-0fc5-8004-8e2e-fe713d1a1f3f",
       "title": "별자리와 행성의 복합적인 영향",
       "url": "sign_planet",
+      "status": "sub",
       "createdTime": "2025-07-23T02:50:00.000Z",
-      "lastEditedTime": "2025-07-23T02:51:00.000Z"
+      "lastEditedTime": "2025-07-23T04:57:00.000Z"
     },
     {
       "id": "239de4ac-0fc5-80f5-847c-ed90dc1c761e",
       "title": "별자리별 멘탈관리법",
       "url": "sign_stress",
+      "status": "sub",
       "createdTime": "2025-07-23T02:48:00.000Z",
-      "lastEditedTime": "2025-07-23T02:51:00.000Z"
+      "lastEditedTime": "2025-07-23T04:57:00.000Z"
     },
     {
       "id": "239de4ac-0fc5-8027-80bf-da03a6baba9c",
       "title": "별자리마다 타고난 적성",
       "url": "sign_job",
+      "status": "sub",
       "createdTime": "2025-07-23T02:47:00.000Z",
-      "lastEditedTime": "2025-07-23T02:48:00.000Z"
+      "lastEditedTime": "2025-07-23T04:57:00.000Z"
     },
     {
       "id": "238de4ac-0fc5-8043-875e-cc7c8ae1aabd",
       "title": "별자리로 보는 연애 궁합 - 최고의 커플 조합은?",
       "url": "couple_chemistry",
+      "status": "main",
       "createdTime": "2025-07-22T01:31:00.000Z",
-      "lastEditedTime": "2025-07-22T01:32:00.000Z"
+      "lastEditedTime": "2025-07-23T04:57:00.000Z"
     },
     {
       "id": "237de4ac-0fc5-8006-9a16-d45cdb0de4da",
       "title": "태양궁 vs 달궁 - 겉모습과 내면의 차이점 분석",
       "url": "sun_moon_sign",
+      "status": "sub",
       "createdTime": "2025-07-21T20:01:00.000Z",
-      "lastEditedTime": "2025-07-21T20:11:00.000Z"
+      "lastEditedTime": "2025-07-23T04:57:00.000Z"
     },
     {
       "id": "237de4ac-0fc5-80b6-a66b-fda631da7847",
       "title": "상승궁(어센던트)가 성격에 미치는 영향력",
       "url": "ascendent_influence",
+      "status": "main",
       "createdTime": "2025-07-21T16:11:00.000Z",
-      "lastEditedTime": "2025-07-22T01:32:00.000Z"
+      "lastEditedTime": "2025-07-23T04:56:00.000Z"
     },
     {
       "id": "237de4ac-0fc5-80ae-8049-dcf5941d2dc0",
       "title": "12별자리의 기본 성격과 특징 완벽 가이드",
       "url": "12sign_basic_feature",
+      "status": "main",
       "createdTime": "2025-07-21T15:45:00.000Z",
-      "lastEditedTime": "2025-07-22T01:34:00.000Z"
+      "lastEditedTime": "2025-07-23T04:56:00.000Z"
     }
   ],
-  "buildTime": "2025-07-23T03:34:43.841Z",
+  "buildTime": "2025-07-23T06:06:26.737Z",
   "totalCount": 15
 }
