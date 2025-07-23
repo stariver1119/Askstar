@@ -14,6 +14,12 @@ import { useDocumentTitle } from './hooks/useDocumentTitle'
 // Get base path from Vite environment or default to '/'
 const BASE_PATH = import.meta.env.BASE_URL || '/'
 
+// Component to handle document title updates
+function TitleUpdater() {
+  useDocumentTitle('pageTitle');
+  return null;
+}
+
 function App() {
   return (
     <LanguageProvider>
@@ -35,10 +41,6 @@ function App() {
   )
 }
 
-// Component to handle document title updates
-function TitleUpdater() {
-  useDocumentTitle('pageTitle');
-  return null;
-}
+
 
 export default App

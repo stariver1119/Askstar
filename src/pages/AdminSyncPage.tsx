@@ -16,10 +16,23 @@ interface SyncResponse {
 }
 
 export default function AdminSyncPage() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [loading, setLoading] = useState(false);
   const [syncResult, setSyncResult] = useState<SyncResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lastSyncTime, setLastSyncTime] = useState<string | null>(null);
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === '1119') {
+      setIsAuthenticated(true);
+      setPasswordError('');
+    } else {
+      setPasswordError('비밀번호가 올바르지 않습니다.');
+    }
+  };
 
   const syncNewArticles = async () => {
     try {
@@ -61,6 +74,53 @@ export default function AdminSyncPage() {
       setLoading(false);
     }
   };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">관리자 인증</h1>
+            <p className="text-gray-600">비밀번호를 입력해주세요</p>
+          </div>
+          
+          <form onSubmit={handlePasswordSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                비밀번호
+              </label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="비밀번호 입력"
+                required
+              />
+            </div>
+            
+            {passwordError && (
+              <div className="text-red-600 text-sm">{passwordError}</div>
+            )}
+            
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            >
+              로그인
+            </button>
+          </form>
+          
+          <div className="mt-6 text-center">
+            <Link to="/" className="text-blue-600 hover:text-blue-800 text-sm">
+              홈으로 돌아가기
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
