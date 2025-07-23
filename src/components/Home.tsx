@@ -54,6 +54,7 @@ const Home = () => {
           <div className="hidden md:flex gap-6">
             <a href="/" className="nav-link">{t('main.navHome')}</a>
             <a onClick={() => navigate('/about')} className="nav-link cursor-pointer">{t('main.navAbout')}</a>
+            <a onClick={() => navigate('/fortune')} className="nav-link cursor-pointer">오늘의 운세</a>
             <a onClick={() => navigate('/article')} className="nav-link cursor-pointer">아티클</a>
             <a onClick={() => navigate('/input')} className="nav-link cursor-pointer">{t('main.navGetStarted')}</a>
           </div>
@@ -116,6 +117,7 @@ const Home = () => {
                 <motion.div className="flex flex-col gap-4">
                   <a href="/" className="text-white text-xl">{t('main.navHome')}</a>
                   <a onClick={() => navigate('/about')} className="text-white text-xl cursor-pointer">{t('main.navAbout')}</a>
+                  <a onClick={() => navigate('/fortune')} className="text-white text-xl cursor-pointer">오늘의 운세</a>
                   <a onClick={() => navigate('/article')} className="text-white text-xl cursor-pointer">아티클</a>
                   <a onClick={() => navigate('/input')} className="text-white text-xl cursor-pointer">{t('main.navGetStarted')}</a>
                 </motion.div>

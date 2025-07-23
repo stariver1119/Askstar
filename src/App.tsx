@@ -8,6 +8,7 @@ import AboutPage from './pages/AboutPage'
 import ArticleListPage from './pages/ArticleListPage'
 import ArticlePage from './pages/ArticlePage'
 import AdminSyncPage from './pages/AdminSyncPage'
+import TodayFortunePage from './pages/TodayFortunePage'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { useDocumentTitle } from './hooks/useDocumentTitle'
 
@@ -28,6 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/fortune" element={<TodayFortunePage />} />
           <Route path="/input" element={<InputPage />} />
           <Route path="/loading" element={<LoadingPage />} />
           <Route path="/result" element={<ResultPage />} />
