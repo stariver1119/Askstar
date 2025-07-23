@@ -159,14 +159,14 @@ const ArticlePage: React.FC = () => {
 
         {/* Main content */}
         <motion.div 
-          className="container mx-auto px-3 sm:px-4 pt-20 md:pt-24 pb-12 md:pb-16 text-white max-w-4xl"
+          className="container mx-auto px-0 sm:px-2 md:px-4 pt-20 md:pt-24 pb-12 md:pb-16 text-white max-w-4xl"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <motion.div 
             variants={itemVariants}
-            className="p-4 sm:p-6 md:p-8"
+            className="px-3 sm:px-4 md:px-8 py-4 sm:py-6 md:py-8"
           >
             <div 
               className="text-white prose-style-override"
