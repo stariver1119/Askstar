@@ -40,21 +40,48 @@ export const createShareableResult = (userData: ShareableResult['userData'], int
 };
 
 // 공유 결과 저장 함수
-export const saveShareableResult = (result: ShareableResult): void => {
+export const saveShareableResult = async (result: ShareableResult): Promise<boolean> => {
   try {
-    // 기존 결과 불러오기
-    const existingResults = getShareableResults();
+    // 서버로 POST 요청
+    const response = await fetch('/api/shared-results', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ shareableResult: result }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
     
-    // 새 결과 추가
-    existingResults.push(result);
-    
-    // 만료된 결과 필터링
-    const validResults = cleanExpiredResults(existingResults);
-    
-    // 저장
-    localStorage.setItem(SHARED_RESULTS_KEY, JSON.stringify(validResults));
+    // 백업용으로 localStorage에도 저장
+    try {
+      const existingResults = getShareableResults();
+      existingResults.push(result);
+      const validResults = cleanExpiredResults(existingResults);
+      localStorage.setItem(SHARED_RESULTS_KEY, JSON.stringify(validResults));
+    } catch (localError) {
+      console.warn('Failed to save to localStorage:', localError);
+    }
+
+    return data.success;
   } catch (error) {
     console.error('Failed to save shareable result:', error);
+    
+    // 서버 실패시 localStorage에만 저장
+    try {
+      const existingResults = getShareableResults();
+      existingResults.push(result);
+      const validResults = cleanExpiredResults(existingResults);
+      localStorage.setItem(SHARED_RESULTS_KEY, JSON.stringify(validResults));
+      return true;
+    } catch (localError) {
+      console.error('Failed to save to localStorage as fallback:', localError);
+      return false;
+    }
   }
 };
 
@@ -70,8 +97,20 @@ export const getShareableResults = (): ShareableResult[] => {
 };
 
 // ID로 특정 공유 결과 불러오기
-export const getShareableResultById = (id: string): ShareableResult | null => {
+export const getShareableResultById = async (id: string): Promise<ShareableResult | null> => {
   try {
+    // 서버에서 먼저 조회
+    const response = await fetch(`/api/shared-results?id=${encodeURIComponent(id)}`);
+    
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success && data.data) {
+        return data.data;
+      }
+    }
+    
+    // 서버에서 실패하면 localStorage에서 조회 (백업)
+    console.warn('Server request failed, trying localStorage...');
     const results = getShareableResults();
     const result = results.find(r => r.id === id);
     
@@ -83,7 +122,21 @@ export const getShareableResultById = (id: string): ShareableResult | null => {
     return result;
   } catch (error) {
     console.error('Failed to get shareable result by ID:', error);
-    return null;
+    
+    // 모든 것이 실패하면 localStorage에서 시도
+    try {
+      const results = getShareableResults();
+      const result = results.find(r => r.id === id);
+      
+      if (!result || result.expiresAt < Date.now()) {
+        return null;
+      }
+      
+      return result;
+    } catch (localError) {
+      console.error('Failed to get from localStorage as fallback:', localError);
+      return null;
+    }
   }
 };
 

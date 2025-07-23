@@ -21,21 +21,31 @@ const SharePage = () => {
 
   // 결과 로드
   useEffect(() => {
-    if (!resultId) {
-      setError('Invalid result ID');
-      setLoading(false);
-      return;
-    }
+    const loadResult = async () => {
+      if (!resultId) {
+        setError('Invalid result ID');
+        setLoading(false);
+        return;
+      }
 
-    const result = getShareableResultById(resultId);
-    if (!result) {
-      setError('Result not found or expired');
-      setLoading(false);
-      return;
-    }
+      try {
+        const result = await getShareableResultById(resultId);
+        if (!result) {
+          setError('Result not found or expired');
+          setLoading(false);
+          return;
+        }
 
-    setSharedResult(result);
-    setLoading(false);
+        setSharedResult(result);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error loading shared result:', error);
+        setError('Failed to load result');
+        setLoading(false);
+      }
+    };
+
+    loadResult();
   }, [resultId]);
 
   // 별자리 이름 가져오기

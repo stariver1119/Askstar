@@ -93,28 +93,46 @@ const ResultPage: React.FC = () => {
   };
   
   // 결과 공유 핸들러
-  const handleShare = () => {
+  const handleShare = async () => {
     if (!formData || !interpretations) return;
     
-    // 해석 데이터 추출
-    const interpretationData = {
-      sun: interpretations.basic_interpretations.sun[getZodiacName(formData.sunSign)],
-      moon: interpretations.basic_interpretations.moon[getZodiacName(formData.moonSign)],
-      rising: interpretations.basic_interpretations.ascendant[getZodiacName(formData.risingSign)]
-    };
-    
-    // 공유 가능한 결과 생성
-    const shareableResult = createShareableResult(formData, interpretationData);
-    
-    // 결과 저장
-    saveShareableResult(shareableResult);
-    
-    // 공유 URL 생성
-    const url = createShareUrl(shareableResult.id);
-    setShareUrl(url);
-    
-    // 공유 모달 표시
-    setIsShareModalOpen(true);
+    try {
+      // 해석 데이터 추출
+      const interpretationData = {
+        sun: interpretations.basic_interpretations.sun[getZodiacName(formData.sunSign)],
+        moon: interpretations.basic_interpretations.moon[getZodiacName(formData.moonSign)],
+        rising: interpretations.basic_interpretations.ascendant[getZodiacName(formData.risingSign)]
+      };
+      
+      // 공유 가능한 결과 생성
+      const shareableResult = createShareableResult(formData, interpretationData);
+      
+      // 결과 저장 (async)
+      const saveSuccess = await saveShareableResult(shareableResult);
+      
+      if (!saveSuccess) {
+        console.error('Failed to save shareable result');
+        // 사용자에게 에러 알림 (선택사항)
+      }
+      
+      // 공유 URL 생성
+      const url = createShareUrl(shareableResult.id);
+      setShareUrl(url);
+      
+      // 공유 모달 표시
+      setIsShareModalOpen(true);
+    } catch (error) {
+      console.error('Error in handleShare:', error);
+      // 에러가 발생해도 URL은 생성해서 보여줌 (localStorage 백업 사용)
+      const shareableResult = createShareableResult(formData, {
+        sun: interpretations.basic_interpretations.sun[getZodiacName(formData.sunSign)],
+        moon: interpretations.basic_interpretations.moon[getZodiacName(formData.moonSign)],
+        rising: interpretations.basic_interpretations.ascendant[getZodiacName(formData.risingSign)]
+      });
+      const url = createShareUrl(shareableResult.id);
+      setShareUrl(url);
+      setIsShareModalOpen(true);
+    }
   };
   
   // 공유 모달 닫기

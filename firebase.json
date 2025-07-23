@@ -18,8 +18,20 @@
     ],
     "rewrites": [
       {
-        "source": "/api/**",
+        "source": "/api/articles",
         "function": "getNewArticles"
+      },
+      {
+        "source": "/api/articles/**",
+        "function": "getArticleContent"
+      },
+      {
+        "source": "/api/shared-results",
+        "function": "saveSharedResult"
+      },
+      {
+        "source": "/api/shared-results/**",
+        "function": "getSharedResult"
       },
       {
         "source": "**",

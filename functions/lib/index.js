@@ -1,0 +1,275 @@
+"use strict";
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getArticleContent = exports.getSharedResult = exports.saveSharedResult = exports.getNewArticles = void 0;
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+const client_1 = require("@notionhq/client");
+const cors = require("cors");
+// Firebase Admin 초기화
+admin.initializeApp();
+// CORS 설정
+const corsHandler = cors({ origin: true });
+// 노션 클라이언트 초기화
+const notion = new client_1.Client({
+    auth: ((_a = functions.config().notion) === null || _a === void 0 ? void 0 : _a.api_key) || process.env.NOTION_API_KEY,
+});
+// 아티클 데이터베이스 ID
+const ARTICLE_DATABASE_ID = '237de4ac-0fc5-80e5-a0a5-c05f32b94eef';
+// 노션 블록을 HTML로 변환하는 함수
+function convertBlockToHTML(block) {
+    switch (block.type) {
+        case 'paragraph':
+            const paragraphText = block.paragraph.rich_text.map((text) => {
+                let content = text.plain_text;
+                if (text.annotations.bold)
+                    content = `<strong>${content}</strong>`;
+                if (text.annotations.italic)
+                    content = `<em>${content}</em>`;
+                if (text.annotations.code)
+                    content = `<code>${content}</code>`;
+                if (text.href)
+                    content = `<a href="${text.href}" target="_blank">${content}</a>`;
+                return content;
+            }).join('');
+            return `<p class="mb-4 text-gray-700 leading-relaxed">${paragraphText}</p>`;
+        case 'heading_1':
+            const h1Text = block.heading_1.rich_text.map((text) => text.plain_text).join('');
+            return `<h1 class="text-3xl font-bold text-gray-900 mb-6 mt-8">${h1Text}</h1>`;
+        case 'heading_2':
+            const h2Text = block.heading_2.rich_text.map((text) => text.plain_text).join('');
+            return `<h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-6">${h2Text}</h2>`;
+        case 'heading_3':
+            const h3Text = block.heading_3.rich_text.map((text) => text.plain_text).join('');
+            return `<h3 class="text-xl font-medium text-gray-800 mb-3 mt-5">${h3Text}</h3>`;
+        case 'bulleted_list_item':
+            const bulletText = block.bulleted_list_item.rich_text.map((text) => text.plain_text).join('');
+            return `<li class="mb-2 text-gray-700">${bulletText}</li>`;
+        case 'numbered_list_item':
+            const numberText = block.numbered_list_item.rich_text.map((text) => text.plain_text).join('');
+            return `<li class="mb-2 text-gray-700">${numberText}</li>`;
+        case 'quote':
+            const quoteText = block.quote.rich_text.map((text) => text.plain_text).join('');
+            return `<blockquote class="border-l-4 border-blue-500 pl-4 py-2 mb-4 bg-blue-50 text-gray-700 italic">${quoteText}</blockquote>`;
+        case 'code':
+            const codeText = block.code.rich_text.map((text) => text.plain_text).join('');
+            return `<pre class="bg-gray-100 rounded-lg p-4 mb-4 overflow-x-auto"><code class="text-sm">${codeText}</code></pre>`;
+        default:
+            return '';
+    }
+}
+// 새 아티클 목록 조회 함수
+exports.getNewArticles = functions.https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        try {
+            // 요청 메서드 확인
+            if (req.method !== 'GET') {
+                res.status(405).json({ error: 'Method not allowed' });
+                return;
+            }
+            // 레이트 리미팅 구현은 추후 추가 예정
+            // 노션에서 아티클 목록 조회
+            const response = await notion.databases.query({
+                database_id: ARTICLE_DATABASE_ID,
+                sorts: [
+                    {
+                        property: 'Created',
+                        direction: 'descending',
+                    },
+                ],
+            });
+            const articles = response.results.map((page) => {
+                var _a, _b, _c, _d, _e, _f;
+                return ({
+                    id: page.id,
+                    title: ((_c = (_b = (_a = page.properties.Name) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.plain_text) || 'Untitled',
+                    url: ((_f = (_e = (_d = page.properties.URL) === null || _d === void 0 ? void 0 : _d.rich_text) === null || _e === void 0 ? void 0 : _e[0]) === null || _f === void 0 ? void 0 : _f.plain_text) || '',
+                    createdTime: page.created_time,
+                    lastEditedTime: page.last_edited_time,
+                });
+            });
+            res.json({
+                articles,
+                timestamp: new Date().toISOString(),
+                totalCount: articles.length,
+            });
+        }
+        catch (error) {
+            console.error('Error fetching new articles:', error);
+            res.status(500).json({
+                error: 'Failed to fetch articles',
+                message: error instanceof Error ? error.message : 'Unknown error'
+            });
+        }
+    });
+});
+// 공유 결과 저장 함수
+exports.saveSharedResult = functions.https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        try {
+            // POST 메서드만 허용
+            if (req.method !== 'POST') {
+                res.status(405).json({ error: 'Method not allowed' });
+                return;
+            }
+            const { shareableResult } = req.body;
+            if (!shareableResult || !shareableResult.id) {
+                res.status(400).json({ error: 'Invalid shareable result data' });
+                return;
+            }
+            // Firestore에 저장
+            const db = admin.firestore();
+            await db.collection('sharedResults').doc(shareableResult.id).set(Object.assign(Object.assign({}, shareableResult), { createdAt: admin.firestore.FieldValue.serverTimestamp() }));
+            res.json({
+                success: true,
+                id: shareableResult.id,
+                message: 'Shared result saved successfully'
+            });
+        }
+        catch (error) {
+            console.error('Error saving shared result:', error);
+            res.status(500).json({
+                error: 'Failed to save shared result',
+                message: error instanceof Error ? error.message : 'Unknown error'
+            });
+        }
+    });
+});
+// 공유 결과 조회 함수
+exports.getSharedResult = functions.https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        try {
+            // GET 메서드만 허용
+            if (req.method !== 'GET') {
+                res.status(405).json({ error: 'Method not allowed' });
+                return;
+            }
+            const { id } = req.query;
+            if (!id || typeof id !== 'string') {
+                res.status(400).json({ error: 'Shared result ID is required' });
+                return;
+            }
+            // Firestore에서 조회
+            const db = admin.firestore();
+            const doc = await db.collection('sharedResults').doc(id).get();
+            if (!doc.exists) {
+                res.status(404).json({ error: 'Shared result not found' });
+                return;
+            }
+            const data = doc.data();
+            // 만료 확인
+            if (data.expiresAt < Date.now()) {
+                // 만료된 데이터 삭제
+                await db.collection('sharedResults').doc(id).delete();
+                res.status(404).json({ error: 'Shared result expired' });
+                return;
+            }
+            res.json({
+                success: true,
+                data: data
+            });
+        }
+        catch (error) {
+            console.error('Error getting shared result:', error);
+            res.status(500).json({
+                error: 'Failed to get shared result',
+                message: error instanceof Error ? error.message : 'Unknown error'
+            });
+        }
+    });
+});
+// 특정 아티클 내용 조회 함수
+exports.getArticleContent = functions.https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        var _a, _b, _c, _d, _e, _f;
+        try {
+            // 요청 메서드 확인
+            if (req.method !== 'GET') {
+                res.status(405).json({ error: 'Method not allowed' });
+                return;
+            }
+            const { url: articleUrl } = req.query;
+            if (!articleUrl || typeof articleUrl !== 'string') {
+                res.status(400).json({ error: 'Article URL is required' });
+                return;
+            }
+            // URL로 아티클 찾기
+            const response = await notion.databases.query({
+                database_id: ARTICLE_DATABASE_ID,
+                filter: {
+                    property: 'URL',
+                    rich_text: {
+                        equals: articleUrl,
+                    },
+                },
+            });
+            if (response.results.length === 0) {
+                res.status(404).json({ error: 'Article not found' });
+                return;
+            }
+            const page = response.results[0];
+            // 아티클 내용 가져오기
+            const blocksResponse = await notion.blocks.children.list({
+                block_id: page.id,
+            });
+            // 블록들을 HTML로 변환
+            let content = '';
+            let inList = false;
+            let listType = '';
+            for (const block of blocksResponse.results) {
+                const blockData = block; // TypeScript 타입 이슈 임시 해결
+                if (blockData.type === 'bulleted_list_item') {
+                    if (!inList) {
+                        content += '<ul class="list-disc list-inside mb-4 space-y-1">';
+                        inList = true;
+                        listType = 'ul';
+                    }
+                    else if (listType !== 'ul') {
+                        content += '</ol><ul class="list-disc list-inside mb-4 space-y-1">';
+                        listType = 'ul';
+                    }
+                }
+                else if (blockData.type === 'numbered_list_item') {
+                    if (!inList) {
+                        content += '<ol class="list-decimal list-inside mb-4 space-y-1">';
+                        inList = true;
+                        listType = 'ol';
+                    }
+                    else if (listType !== 'ol') {
+                        content += '</ul><ol class="list-decimal list-inside mb-4 space-y-1">';
+                        listType = 'ol';
+                    }
+                }
+                else {
+                    if (inList) {
+                        content += listType === 'ul' ? '</ul>' : '</ol>';
+                        inList = false;
+                        listType = '';
+                    }
+                }
+                content += convertBlockToHTML(blockData);
+            }
+            // 리스트가 끝나지 않은 경우 닫기
+            if (inList) {
+                content += listType === 'ul' ? '</ul>' : '</ol>';
+            }
+            const article = {
+                id: page.id,
+                title: ((_c = (_b = (_a = page.properties.Name) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.plain_text) || 'Untitled',
+                url: ((_f = (_e = (_d = page.properties.URL) === null || _d === void 0 ? void 0 : _d.rich_text) === null || _e === void 0 ? void 0 : _e[0]) === null || _f === void 0 ? void 0 : _f.plain_text) || '',
+                content,
+                createdTime: page.created_time,
+                lastEditedTime: page.last_edited_time,
+            };
+            res.json(article);
+        }
+        catch (error) {
+            console.error('Error fetching article content:', error);
+            res.status(500).json({
+                error: 'Failed to fetch article content',
+                message: error instanceof Error ? error.message : 'Unknown error'
+            });
+        }
+    });
+});
+//# sourceMappingURL=index.js.map

@@ -84,9 +84,7 @@ export const getNewArticles = functions.https.onRequest((req, res) => {
         return;
       }
 
-      // 레이트 리미팅 (간단한 구현)
-      const clientIP = req.ip;
-      const now = Date.now();
+      // 레이트 리미팅 구현은 추후 추가 예정
       
       // 노션에서 아티클 목록 조회
       const response = await notion.databases.query({
@@ -117,6 +115,116 @@ export const getNewArticles = functions.https.onRequest((req, res) => {
       console.error('Error fetching new articles:', error);
       res.status(500).json({ 
         error: 'Failed to fetch articles',
+        message: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
+  });
+});
+
+// 공유 결과 데이터 타입 정의
+interface ShareableResult {
+  id: string;
+  userData: {
+    name: string;
+    gender: string;
+    sunSign: string;
+    moonSign: string;
+    risingSign: string;
+  };
+  interpretations: {
+    sun: string;
+    moon: string;
+    rising: string;
+  };
+  createdAt: number;
+  expiresAt: number;
+}
+
+// 공유 결과 저장 함수
+export const saveSharedResult = functions.https.onRequest((req, res) => {
+  corsHandler(req, res, async () => {
+    try {
+      // POST 메서드만 허용
+      if (req.method !== 'POST') {
+        res.status(405).json({ error: 'Method not allowed' });
+        return;
+      }
+
+      const { shareableResult } = req.body;
+      
+      if (!shareableResult || !shareableResult.id) {
+        res.status(400).json({ error: 'Invalid shareable result data' });
+        return;
+      }
+
+      // Firestore에 저장
+      const db = admin.firestore();
+      await db.collection('sharedResults').doc(shareableResult.id).set({
+        ...shareableResult,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+
+      res.json({ 
+        success: true, 
+        id: shareableResult.id,
+        message: 'Shared result saved successfully' 
+      });
+
+    } catch (error) {
+      console.error('Error saving shared result:', error);
+      res.status(500).json({ 
+        error: 'Failed to save shared result',
+        message: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
+  });
+});
+
+// 공유 결과 조회 함수
+export const getSharedResult = functions.https.onRequest((req, res) => {
+  corsHandler(req, res, async () => {
+    try {
+      // GET 메서드만 허용
+      if (req.method !== 'GET') {
+        res.status(405).json({ error: 'Method not allowed' });
+        return;
+      }
+
+      const { id } = req.query;
+      
+      if (!id || typeof id !== 'string') {
+        res.status(400).json({ error: 'Shared result ID is required' });
+        return;
+      }
+
+      // Firestore에서 조회
+      const db = admin.firestore();
+      const doc = await db.collection('sharedResults').doc(id).get();
+
+      if (!doc.exists) {
+        res.status(404).json({ error: 'Shared result not found' });
+        return;
+      }
+
+      const data = doc.data() as ShareableResult;
+      
+      // 만료 확인
+      if (data.expiresAt < Date.now()) {
+        // 만료된 데이터 삭제
+        await db.collection('sharedResults').doc(id).delete();
+        res.status(404).json({ error: 'Shared result expired' });
+        return;
+      }
+
+      res.json({
+        success: true,
+        data: data
+      });
+
+    } catch (error) {
+      console.error('Error getting shared result:', error);
+      res.status(500).json({ 
+        error: 'Failed to get shared result',
         message: error instanceof Error ? error.message : 'Unknown error'
       });
     }
@@ -169,7 +277,8 @@ export const getArticleContent = functions.https.onRequest((req, res) => {
       let listType = '';
 
       for (const block of blocksResponse.results) {
-        if (block.type === 'bulleted_list_item') {
+        const blockData = block as any; // TypeScript 타입 이슈 임시 해결
+        if (blockData.type === 'bulleted_list_item') {
           if (!inList) {
             content += '<ul class="list-disc list-inside mb-4 space-y-1">';
             inList = true;
@@ -178,7 +287,7 @@ export const getArticleContent = functions.https.onRequest((req, res) => {
             content += '</ol><ul class="list-disc list-inside mb-4 space-y-1">';
             listType = 'ul';
           }
-        } else if (block.type === 'numbered_list_item') {
+        } else if (blockData.type === 'numbered_list_item') {
           if (!inList) {
             content += '<ol class="list-decimal list-inside mb-4 space-y-1">';
             inList = true;
@@ -195,7 +304,7 @@ export const getArticleContent = functions.https.onRequest((req, res) => {
           }
         }
 
-        content += convertBlockToHTML(block);
+        content += convertBlockToHTML(blockData);
       }
 
       // 리스트가 끝나지 않은 경우 닫기
