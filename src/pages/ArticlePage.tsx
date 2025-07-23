@@ -135,22 +135,22 @@ const ArticlePage: React.FC = () => {
     <StarryBackground scrollable={true}>
       <div className="flex flex-col min-h-screen w-full overflow-auto">
         {/* Navigation */}
-        <nav className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-8 py-4 bg-black/20 backdrop-blur-sm">
-          <div className="w-32">
+        <nav className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 md:px-8 py-4 bg-black/20 backdrop-blur-sm">
+          <div className="w-20 md:w-32">
             <button 
               onClick={handleBackClick}
-              className="text-white hover:text-purple-300 transition-colors"
+              className="text-white hover:text-purple-300 transition-colors text-sm md:text-base"
             >
               ← 목록으로
             </button>
           </div>
-          <div className="text-center text-white text-lg font-medium truncate px-4">
+          <div className="text-center text-white text-base md:text-lg font-medium truncate px-2 md:px-4">
             {title || '아티클'}
           </div>
-          <div className="w-32 flex justify-end">
+          <div className="w-20 md:w-32 flex justify-end">
             <button 
               onClick={handleHomeClick}
-              className="text-white hover:text-purple-300 transition-colors text-sm"
+              className="text-white hover:text-purple-300 transition-colors text-xs md:text-sm"
             >
               홈으로
             </button>
@@ -159,14 +159,14 @@ const ArticlePage: React.FC = () => {
 
         {/* Main content */}
         <motion.div 
-          className="container mx-auto px-4 pt-24 pb-16 text-white max-w-4xl"
+          className="container mx-auto px-3 sm:px-4 pt-20 md:pt-24 pb-12 md:pb-16 text-white max-w-4xl"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <motion.div 
             variants={itemVariants}
-            className="p-8"
+            className="p-4 sm:p-6 md:p-8"
           >
             <div 
               className="text-white prose-style-override"
@@ -178,16 +178,16 @@ const ArticlePage: React.FC = () => {
               dangerouslySetInnerHTML={{ 
                 __html: content.replace(
                   /<h1([^>]*)>/g, 
-                  '<h1$1 style="color: rgb(196 181 253); font-size: 2rem; font-weight: bold; margin-bottom: 1.5rem; margin-top: 0;">'
+                  '<h1$1 style="color: rgb(196 181 253); font-size: clamp(1.5rem, 4vw, 2rem); font-weight: bold; margin-bottom: 1.5rem; margin-top: 0;">'
                 ).replace(
                   /<h2([^>]*)>/g, 
-                  '<h2$1 style="color: rgb(196 181 253); font-size: 1.75rem; font-weight: bold; margin-bottom: 1.25rem; margin-top: 2rem;">'
+                  '<h2$1 style="color: rgb(196 181 253); font-size: clamp(1.25rem, 3.5vw, 1.75rem); font-weight: bold; margin-bottom: 1.25rem; margin-top: 2rem;">'
                 ).replace(
                   /<h3([^>]*)>/g, 
-                  '<h3$1 style="color: rgb(167 139 250); font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; margin-top: 1.5rem;">'
+                  '<h3$1 style="color: rgb(167 139 250); font-size: clamp(1.125rem, 3vw, 1.5rem); font-weight: bold; margin-bottom: 1rem; margin-top: 1.5rem;">'
                 ).replace(
                   /<p([^>]*)>/g, 
-                  '<p$1 style="color: rgb(255 255 255 / 0.8); margin-bottom: 1rem; font-size: 1.1rem;">'
+                  '<p$1 style="color: rgb(255 255 255 / 0.8); margin-bottom: 1rem; font-size: clamp(0.95rem, 2.5vw, 1.1rem); line-height: 1.6;">'
                 ).replace(
                   /<strong([^>]*)>/g, 
                   '<strong$1 style="color: rgb(255 255 255 / 0.95); font-weight: 600;">'

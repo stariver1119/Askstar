@@ -115,33 +115,33 @@ const ArticleListPage: React.FC = () => {
     <StarryBackground scrollable={true}>
       <div className="flex flex-col min-h-screen w-full overflow-auto">
         {/* Navigation */}
-        <nav className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-8 py-4 bg-black/20 backdrop-blur-sm">
-          <div className="w-32">
+        <nav className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 md:px-8 py-4 bg-black/20 backdrop-blur-sm">
+          <div className="w-20 md:w-32">
             <button 
               onClick={handleBackClick}
-              className="text-white hover:text-purple-300 transition-colors"
+              className="text-white hover:text-purple-300 transition-colors text-sm md:text-base"
             >
               ← 홈으로
             </button>
           </div>
-          <div className="text-center text-white text-lg font-medium">
+          <div className="text-center text-white text-base md:text-lg font-medium">
             아티클
           </div>
-          <div className="w-32"></div>
+          <div className="w-20 md:w-32"></div>
         </nav>
 
         {/* Main content */}
         <motion.div 
-          className="container mx-auto px-4 pt-24 pb-16 text-white max-w-4xl"
+          className="container mx-auto px-3 sm:px-4 pt-20 md:pt-24 pb-12 md:pb-16 text-white max-w-4xl"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <motion.div variants={itemVariants} className="mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-purple-200">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 text-purple-200">
               아티클 목록
             </h1>
-            <p className="text-center text-white/60 text-lg">
+            <p className="text-center text-white/60 text-base sm:text-lg">
               점성술과 관련된 다양한 이야기들을 만나보세요
             </p>
           </motion.div>
@@ -182,7 +182,7 @@ const ArticleListPage: React.FC = () => {
                               className="block relative overflow-hidden"
                             >
                               <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-xl blur-sm"></div>
-                              <div className="relative bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-8 hover:from-white/15 hover:to-white/10 transition-all duration-500 backdrop-blur-sm border border-purple-500/30 hover:border-purple-400/50 group shadow-2xl hover:shadow-purple-500/25">
+                              <div className="relative bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-4 sm:p-6 md:p-8 hover:from-white/15 hover:to-white/10 transition-all duration-500 backdrop-blur-sm border border-purple-500/30 hover:border-purple-400/50 group shadow-2xl hover:shadow-purple-500/25">
                                 <div className="absolute top-4 right-4">
                                   <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg">
                                     <span className="mr-1">⭐</span>
@@ -190,12 +190,12 @@ const ArticleListPage: React.FC = () => {
                                   </span>
                                 </div>
                                 
-                                <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white group-hover:text-purple-200 transition-colors leading-tight">
+                                <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-3 md:mb-4 text-white group-hover:text-purple-200 transition-colors leading-tight">
                                   {article.title}
                                 </h3>
                                 
                                 {article.excerpt && (
-                                  <p className="text-white/80 mb-6 text-lg leading-relaxed line-clamp-3">
+                                  <p className="text-white/80 mb-4 md:mb-6 text-sm sm:text-base md:text-lg leading-relaxed line-clamp-3">
                                     {article.excerpt}
                                   </p>
                                 )}
@@ -210,9 +210,9 @@ const ArticleListPage: React.FC = () => {
                                     </span>
                                   </div>
                                   
-                                  <div className="flex items-center text-purple-300 group-hover:text-purple-200 transition-colors">
-                                    <span className="text-sm font-medium mr-2">읽어보기</span>
-                                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <div className="flex items-center text-purple-300 group-hover:text-purple-200 transition-colors self-end sm:self-auto">
+                                    <span className="text-xs md:text-sm font-medium mr-2">읽어보기</span>
+                                    <svg className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
                                   </div>
@@ -247,11 +247,11 @@ const ArticleListPage: React.FC = () => {
                           >
                             <Link
                               to={`/article/${article.url}`}
-                              className="block bg-white/5 rounded-lg p-6 hover:bg-white/10 transition-all duration-300 hover:shadow-lg backdrop-blur-sm border border-white/10 hover:border-white/20 group"
+                              className="block bg-white/5 rounded-lg p-4 sm:p-5 md:p-6 hover:bg-white/10 transition-all duration-300 hover:shadow-lg backdrop-blur-sm border border-white/10 hover:border-white/20 group"
                             >
                               <div className="flex items-start justify-between">
                                 <div className="flex-1">
-                                  <h3 className="text-lg md:text-xl font-semibold mb-2 text-white group-hover:text-white/90 transition-colors">
+                                  <h3 className="text-base sm:text-lg md:text-xl font-semibold mb-2 text-white group-hover:text-white/90 transition-colors">
                                     {article.title}
                                   </h3>
                                   
@@ -273,8 +273,8 @@ const ArticleListPage: React.FC = () => {
                                   </div>
                                 </div>
                                 
-                                <div className="ml-4 text-white/40 group-hover:text-white/60 transition-colors">
-                                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div className="ml-3 md:ml-4 text-white/40 group-hover:text-white/60 transition-colors flex-shrink-0">
+                                  <svg className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                   </svg>
                                 </div>
